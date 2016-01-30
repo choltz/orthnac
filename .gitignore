@@ -15,3 +15,8 @@
 /log/*
 !/log/.keep
 /tmp
+
+
+# ignore key config files
+config/database.yml
+config/secrets.yml
