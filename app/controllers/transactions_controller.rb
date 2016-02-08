@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   def index
-    render text: 'buh'
+    @title = 'Transactions'
   end
 
 end
