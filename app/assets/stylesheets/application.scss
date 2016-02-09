@@ -1,0 +1,28 @@
+@import "materialize/components/color";
+$primary-color: color("green", "darken-3") !default;
+@import 'materialize';
+
+
+header, main, footer {
+  padding-left: 240px;
+}
+
+nav {
+  padding-left: 255px;
+}
+
+.side-nav {
+  background-color: #eee;
+  color: #333;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    padding-left: 0;
+  }
+
+  nav {
+    padding-left: 0;
+  }
+
+}

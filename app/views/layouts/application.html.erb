@@ -7,11 +7,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class="header">
-    <%= @title %>
-  </div>
-  <div class="content">
-    <%= yield %>
-  </div>
+
+  <nav>
+    <a href="#" class="brand-logo"><%= @title %></a>
+    <ul id="slide-out" class="side-nav fixed">
+      <li><a href="#!">First Sidebar Link</a></li>
+      <li><a href="#!">Second Sidebar Link</a></li>
+    </ul>
+    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+  </nav>
+
+  <!-- Page Layout here -->
+  <main>
+    <div class="row">
+      <div class="col s9">
+        <div class="content">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+  </main>
+
 </body>
+
+<script language="javascript">
+  $(".button-collapse").sideNav();
+</script>
 </html>
