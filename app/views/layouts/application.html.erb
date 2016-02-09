@@ -9,20 +9,31 @@
 <body>
 
   <nav>
-    <a href="#" class="brand-logo"><%= @title %></a>
-    <ul id="slide-out" class="side-nav fixed">
-      <li><a href="#!">First Sidebar Link</a></li>
-      <li><a href="#!">Second Sidebar Link</a></li>
-    </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    <div class="container">
+      <a href="#" class="brand-logo"><%= @title %></a>
+
+      <ul class="hide-on-med-and-down nav-items">
+        <li class="selected"><a href="#!">Dashboard</a></li>
+        <li><a href="#!">Import</a></li>
+        <li><a href="#!">Detail</a></li>
+      </ul>
+      <ul id="slide-out" class="side-nav">
+        <li class="active"><a href="#!">Dashboard</a></li>
+        <li><a href="#!">Import</a></li>
+        <li><a href="#!">Detail</a></li>
+      </ul>
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    </div>
   </nav>
 
   <!-- Page Layout here -->
   <main>
-    <div class="row">
-      <div class="col s9">
-        <div class="content">
-          <%= yield %>
+    <div class="container">
+      <div class="row">
+        <div class="col s9">
+          <div class="content">
+            <%= yield %>
+          </div>
         </div>
       </div>
     </div>

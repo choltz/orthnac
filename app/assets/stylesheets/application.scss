@@ -1,28 +1,39 @@
 @import "materialize/components/color";
-$primary-color: color("green", "darken-3") !default;
+$primary-color: color("green", "darken-4") !default;
 @import 'materialize';
 
+body {
+  background-color: #e5e5e5;
+}
 
-header, main, footer {
-  padding-left: 240px;
+.container {
+  width: 1000px;
 }
 
 nav {
-  padding-left: 255px;
+  height: 200px;
+
+  .brand-logo {
+    padding-top: 65px;
+  }
+
+  li.selected {
+    border-bottom: solid 5px;
+  }
+
+  .nav-items {
+    padding-top: 131px;
+  }
 }
 
-.side-nav {
-  background-color: #eee;
-  color: #333;
+
+h2 {
+  @extend .green-text, .text-darken-4;
 }
+
 
 @media only screen and (max-width : 992px) {
   header, main, footer {
-    padding-left: 0;
+//    padding-left: 0;
   }
-
-  nav {
-    padding-left: 0;
-  }
-
 }

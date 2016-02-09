@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   def index
-    @title = 'Transactions'
+    @title = 'Transaction Analysis'
   end
 
 end
