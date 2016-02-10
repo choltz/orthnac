@@ -14,6 +14,7 @@ gem 'jbuilder'
 group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
+  gem 'shoulda-context'
   gem 'simplecov'
 end
 

@@ -16,6 +16,7 @@
 !/log/.keep
 /tmp
 
+coverage/*
 
 # ignore key config files
 config/database.yml
