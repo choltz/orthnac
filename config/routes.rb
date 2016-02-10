@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   root 'transactions#index'
 
+  get 'imports' => 'imports#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

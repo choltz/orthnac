@@ -17,6 +17,7 @@
 /tmp
 
 coverage/*
+.byebug_history
 
 # ignore key config files
 config/database.yml

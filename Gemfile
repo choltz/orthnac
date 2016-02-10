@@ -14,7 +14,7 @@ gem 'uglifier'
 group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'shoulda-context'
   gem 'simplecov'
