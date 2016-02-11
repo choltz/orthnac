@@ -1,6 +1,8 @@
 this is the imports list
-
-<div>
-  <label for="import_file">Import File</label>
-  <%= file_field_tag "import_file" %>
-</div>
+<%= form_for :import, url: upload_path, html: { multipart: true } do %>
+  <div>
+    <label for="import_file">Import File</label>
+    <%= file_field_tag "import_file" %>
+  </div>
+  <%= submit_tag "Import" %>
+<% end %>
