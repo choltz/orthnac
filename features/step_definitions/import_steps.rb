@@ -23,7 +23,7 @@ Then(/^page should redirect to to the import index page$/) do
 end
 
 Then(/^"([^"]*)" should be copied to the "([^"]*)"$/) do |file, folder|
-  pending # Write code here that turns the phrase above into concrete actions
+  assert File.exists?('tmp/transactions.csv')
 end
 
 Then(/^import index page shows the uploaded file$/) do
