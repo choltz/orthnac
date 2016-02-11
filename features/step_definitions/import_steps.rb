@@ -1,3 +1,7 @@
+Before do
+  File.delete('tmp/transactions.csv') if File.exists?('tmp/transactions.csv')
+end
+
 Given(/^I am on the "([^"]*)" page$/) do |route|
   visit "/#{route}"
 end
