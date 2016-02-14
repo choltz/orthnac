@@ -38,6 +38,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.4.0)
     arel (6.0.3)
+    ast (2.2.0)
     awesome_print (1.6.1)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -111,6 +112,9 @@ GEM
     multi_test (0.1.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
+    parser (2.3.0.5)
+      ast (~> 2.2)
+    powerpack (0.1.1)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.4)
@@ -140,7 +144,15 @@ GEM
       activesupport (= 4.2.5.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    rainbow (2.1.0)
     rake (10.5.0)
+    rubocop (0.37.2)
+      parser (>= 2.3.0.4, < 3.0)
+      powerpack (~> 0.1)
+      rainbow (>= 1.99.1, < 3.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 0.3)
+    ruby-progressbar (1.7.5)
     sass (3.4.21)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -173,6 +185,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unicode-display_width (0.3.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -192,6 +205,7 @@ DEPENDENCIES
   materialize-sass
   quiet_assets
   rails (= 4.2.5.1)
+  rubocop
   sass-rails
   shoulda-context
   simplecov

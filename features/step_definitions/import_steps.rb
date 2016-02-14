@@ -1,5 +1,7 @@
+require_relative 'common_steps'
+
 Before do
-  File.delete('tmp/transactions.csv') if File.exists?('tmp/transactions.csv')
+  File.delete('imports/test_transactions1.csv') if File.exists?('imports/test_transactions1.csv')
 end
 
 Given(/^I am on the "([^"]*)" page$/) do |route|
@@ -22,10 +24,14 @@ Then(/^page should redirect to to the import index page$/) do
   assert_equal import_path, page.current_path
 end
 
-Then(/^"([^"]*)" should be copied to the "([^"]*)"$/) do |file, folder|
-  assert File.exists?('tmp/transactions.csv')
+Then(/^"([^"]*)" should be copied to "([^"]*)"$/) do |file, folder|
+  assert File.exists?('imports/test_transactions1.csv')
 end
 
-Then(/^import index page shows the uploaded file$/) do
+Then(/^redirect to "([^"]*)"$/) do |path|
+  assert current_path == path
+end
+
+Then(/^shows the uploaded file$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end

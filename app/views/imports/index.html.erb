@@ -1,8 +1,49 @@
-this is the imports list
-<%= form_for :import, url: upload_path, html: { multipart: true } do %>
-  <div>
-    <label for="import_file">Import File</label>
-    <%= file_field_tag "import_file" %>
+<div class="import-page">
+  <div class="row">
+    <div class="col s4">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Select Import File</span>
+          <%= form_for :import, url: upload_path, html: { multipart: true } do %>
+            <%= file_input_tag button_text: 'File', id: 'import_file', name: 'import_file'  %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s8">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Import History</span>
+
+          <table class="bordered">
+            <thead>
+              <tr>
+                <th data-field="id">File</th>
+                <th data-field="name">Import Date</th>
+                <th data-field="price">Download</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @imports.each do |import| %>
+                <tr>
+                  <td><%= import.filename %></td>
+                  <td><%= import.created_at %></td>
+                  <td><%= link_to 'download' %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+
+
+        </div>
+      </div>
+    </div>
   </div>
-  <%= submit_tag "Import" %>
-<% end %>
+</div>
+
+
+<script language="javascript">
+  app.Page.Import();
+</script>

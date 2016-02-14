@@ -5,7 +5,6 @@
 # files.
 
 require 'simplecov'
-SimpleCov.start 'rails'
 
 require 'cucumber/rails'
 

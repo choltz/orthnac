@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160207030521) do
+ActiveRecord::Schema.define(version: 20160213213352) do
+
+  create_table "imports", force: :cascade do |t|
+    t.text     "filename"
+    t.text     "filepath"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "transactions", force: :cascade do |t|
     t.string   "account_number"
@@ -25,6 +32,8 @@ ActiveRecord::Schema.define(version: 20160207030521) do
     t.text     "transaction_type"
     t.decimal  "amount",           precision: 7, scale: 2
     t.text     "reference"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

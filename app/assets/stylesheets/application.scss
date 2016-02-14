@@ -1,6 +1,7 @@
 @import "materialize/components/color";
 $primary-color: color("green", "darken-4") !default;
 @import 'materialize';
+@import 'import';
 
 body {
   background-color: #e5e5e5;
@@ -31,9 +32,11 @@ h2 {
   @extend .green-text, .text-darken-4;
 }
 
+main {
+  padding: 40px;
+}
 
 @media only screen and (max-width : 992px) {
   header, main, footer {
-//    padding-left: 0;
   }
 }
