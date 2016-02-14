@@ -1,0 +1,18 @@
+<table class="bordered striped responsive-table">
+  <thead>
+    <tr>
+      <th>File</th>
+      <th>Import Date</th>
+      <th class="import-table-download">Download</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% imports.each do |import| %>
+      <tr>
+        <td><%= import.filename %></td>
+        <td><%= import.created_at.strftime('%m/%d/%Y') %></td>
+        <td class="import-table-download"><i class="material-icons grey-text">import_export</i></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

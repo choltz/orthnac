@@ -1,42 +1,27 @@
 <div class="import-page">
-  <div class="row">
-    <div class="col s4">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Select Import File</span>
-          <%= form_for :import, url: upload_path, html: { multipart: true } do %>
-            <%= file_input_tag button_text: 'File', id: 'import_file', name: 'import_file'  %>
-          <% end %>
-        </div>
+  <%= form_for :import, url: upload_path, html: { multipart: true } do %>
+
+    <div class="row import-file-upload-row">
+      <div class="col s11 offset-s10">
+        <%= file_input_tag id: 'import_file' %>
       </div>
     </div>
 
-    <div class="col s8">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Import History</span>
-          <table class="bordered striped responsive-table">
-            <thead>
-              <tr>
-                <th data-field="id">File</th>
-                <th data-field="name">Import Date</th>
-                <th data-field="price">Download</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @imports.each do |import| %>
-                <tr>
-                  <td><%= import.filename %></td>
-                  <td><%= import.created_at.strftime('%m/%d/%Y') %></td>
-                  <td><%= link_to 'download' %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+    <div class="row">
+      <div class="col s12">
+
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Import History</span>
+
+            <%= render 'import_table', imports: @imports %>
+          </div>
         </div>
+
       </div>
+
     </div>
-  </div>
+  <% end %>
 </div>
 
 

@@ -14,10 +14,7 @@ end
 
 Given(/^I attach "([^"]*)" to "([^"]*)"$/) do |file, field|
   attach_file(field, file)
-end
-
-When(/^I press "([^"]*)"$/) do |button|
-  click_button button
+  click_button 'Import'
 end
 
 Then(/^page should redirect to to the import index page$/) do
