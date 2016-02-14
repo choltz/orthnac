@@ -1,6 +1,8 @@
 .import-page {
-  .import-file-upload-row {
-    margin-top: -68px;
+  .file-upload-button {
+    position:   absolute;
+    margin-top: -20px;
+    margin-left: -10px;
   }
 
   .import-table-download {
@@ -8,6 +10,10 @@
   }
 
   .file-input {
+    display: none;
+  }
+
+  input[type=submit] {
     display: none;
   }
 }

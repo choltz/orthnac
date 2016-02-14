@@ -1,13 +1,12 @@
 <div class="import-page">
   <%= form_for :import, url: upload_path, html: { multipart: true } do %>
 
-    <div class="row import-file-upload-row">
-      <div class="col s11 offset-s10">
-        <%= file_input_tag id: 'import_file' %>
-      </div>
-    </div>
 
     <div class="row">
+      <div class="col s11 offset-s10">
+        <%= file_input_tag id: 'import_file' %>
+        <%= submit_tag 'Import' %>
+      </div>
       <div class="col s12">
 
         <div class="card">
