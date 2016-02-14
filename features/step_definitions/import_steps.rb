@@ -29,6 +29,6 @@ Then(/^redirect to "([^"]*)"$/) do |path|
   assert current_path == path
 end
 
-Then(/^shows the uploaded file$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
+  assert_equal count.to_i, page.all("#{table} tbody tr").count
 end

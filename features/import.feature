@@ -3,15 +3,13 @@ Feature: Import transactions
   A visitor
   Should should import a file
 
-Scenario: imports a file
+Scenario: imports a file and shows a history of imports
   Given I am on the "imports" page
   And I attach "test/data/test_transactions1.csv" to "import_file"
   Then page should redirect to to the import index page
   And "file" should be copied to "imports/test_transactions1.csv"
   And redirect to "/imports"
-  And shows the uploaded file
-
-Scenario: imports a file with overlapping transactions
+  And the ".import-table" table has "1" rows
 
 Scenario: imports a non-csv file
 
