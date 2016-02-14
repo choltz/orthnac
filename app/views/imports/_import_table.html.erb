@@ -11,7 +11,9 @@
       <tr>
         <td><%= import.filename %></td>
         <td><%= import.created_at.strftime('%m/%d/%Y') %></td>
-        <td class="import-table-download"><i class="material-icons grey-text">import_export</i></td>
+        <td class="import-table-download">
+          <a class="file-download-button btn-floating btn waves-effect waves-light brown lighten-2"><i class="material-icons">play_for_work</i></a>
+        </td>
       </tr>
     <% end %>
   </tbody>

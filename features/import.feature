@@ -7,17 +7,29 @@ Scenario: imports a file and shows a history of imports
   Given I am on the "imports" page
   And I attach "test/data/test_transactions1.csv" to "import_file"
   Then page should redirect to to the import index page
-  And "file" should be copied to "imports/test_transactions1.csv"
+  And "imports/test_transactions1.csv" should exist
   And redirect to "/imports"
   And the ".import-table" table has "1" rows
+  And shows a "download" link in the ".import-table" table
 
 Scenario: imports a non-csv file
-
-Scenario: imports nonthing
-  # show message
+  Given I am on the "imports" page
+  And I attach "test/data/test_not_csv.txt" to "import_file"
+  Then page should redirect to to the import index page
+  And "imports/test_not_csv.txt" should not exist
+  And the ".import-table" table has "1" rows
+  And shows a "error" link in the ".import-table" table
 
 Scenario: import format errors
+  Given I am on the "imports" page
+  And I attach "test/data/test_format_problem.csv" to 'import_file'
+  Then page should redirect to the import index page
+  And "file" should not be copied to the "imports" folder
+  And shows the message "CSV format problem"
+  And the ".import-table" table has "0" rows
 
-Scenario: Views a list of imported files
-  # what fields are visible
-  # should have a link to the saved import file
+Scenario: download csv file
+  Given I am on the "imports" page
+  And I attach "test/data/test_transactions1.csv" to 'import_file'
+  And I click the download link
+  Then "test_transactions1.csv" should be downloaded
