@@ -22,13 +22,13 @@ Scenario: imports a non-csv file
 
 Scenario: download csv file
   Given I am on the "imports" page
-  And I attach "test/data/test_transactions1.csv" to 'import_file'
-  And I click the download link
+  And I attach "test/data/test_transactions1.csv" to "import_file"
+  And I click the "download" link in the ".import-table" table
   Then "test_transactions1.csv" should be downloaded
 
 Scenario: import format errors
   Given I am on the "imports" page
-  And I attach "test/data/test_format_problem.csv" to 'import_file'
+  And I attach "test/data/test_format_problem.csv" to "import_file"
   Then page should redirect to the import index page
   And "file" should not be copied to the "imports" folder
   And shows the message "CSV format problem"

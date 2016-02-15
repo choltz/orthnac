@@ -64,14 +64,11 @@ Then(/^the "([^"]*)" has "([^"]*)" rows$/) do |arg1, arg2|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Given(/^I click the download link$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+Given(/^I click the "([^"]*)" link in the "([^"]*)" table$/) do |link, table|
+  page.all("#{table} tbody tr a").last.click
 end
 
 Then(/^"([^"]*)" should be downloaded$/) do |file|
-  result = page.response_headers['Content-Type'].should == "application/octet-stream"
-
-  if result
-    result = page.response_headers['Content-Disposition'].should =~ /#{file}/
-  end
+  assert_equal 'application/octet-stream', page.response_headers['Content-Type']
+  assert_equal "attachment; filename=\"#{file}\"", page.response_headers['Content-Disposition']
 end
