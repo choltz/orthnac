@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160213213352) do
   create_table "imports", force: :cascade do |t|
     t.text     "filename"
     t.text     "filepath"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

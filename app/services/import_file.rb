@@ -7,8 +7,13 @@ module Services
     def call(file)
       destination = "imports/#{file.original_filename}"
 
-      IO.copy_stream file.path, destination if file.original_filename =~ /csv$/
-      Import.create! filename: file.original_filename, filepath: destination
+      if file.original_filename =~ /csv$/
+        IO.copy_stream file.path, destination
+      else
+        message = 'Not a csv file'
+      end
+
+      Import.create! filename: file.original_filename, filepath: destination, message: message
     end
   end
 end

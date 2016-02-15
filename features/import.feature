@@ -18,7 +18,13 @@ Scenario: imports a non-csv file
   Then page should redirect to to the import index page
   And "imports/test_not_csv.txt" should not exist
   And the ".import-table" table has "1" rows
-  And shows a "error" link in the ".import-table" table
+  And shows a "!" link in the ".import-table" table
+
+Scenario: download csv file
+  Given I am on the "imports" page
+  And I attach "test/data/test_transactions1.csv" to 'import_file'
+  And I click the download link
+  Then "test_transactions1.csv" should be downloaded
 
 Scenario: import format errors
   Given I am on the "imports" page
@@ -27,9 +33,3 @@ Scenario: import format errors
   And "file" should not be copied to the "imports" folder
   And shows the message "CSV format problem"
   And the ".import-table" table has "0" rows
-
-Scenario: download csv file
-  Given I am on the "imports" page
-  And I attach "test/data/test_transactions1.csv" to 'import_file'
-  And I click the download link
-  Then "test_transactions1.csv" should be downloaded

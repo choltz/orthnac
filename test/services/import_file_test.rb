@@ -32,6 +32,8 @@ module Services
       should 'create an import record if it is not a csv file' do
         Services::ImportFile.new.call(@non_csv_file)
         assert_equal 1, Import.count
+        assert Import.first.message.present?, 'There should be an import message'
+        assert_equal 'Not a csv file', Import.first.message
       end
 
       should 'leave a message in the imports table if it is not a csv file' do
