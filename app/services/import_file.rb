@@ -13,6 +13,8 @@ module Services
         message = 'Not a csv file'
       end
 
+      Services::ImportTransactions.new.call(file)
+
       Import.create! filename: file.original_filename, filepath: destination, message: message
     end
   end

@@ -7,8 +7,9 @@ module Services
         import_files = %w{ imports/test_transactions1.csv imports/test_not_csv.txt }
         import_files.each{ |file| File.delete(file) if File.exist?(file) }
 
-        @file         = create_attachment_file 'test_transactions1.csv'
-        @non_csv_file = create_attachment_file 'test_not_csv.txt'
+        @file                = create_attachment_file 'test_transactions1.csv'
+        @non_csv_file        = create_attachment_file 'test_not_csv.txt'
+        @format_problem_file = create_attachment_file 'test_format_problem.csv'
       end
 
       should 'copy the file to the imports folder' do
@@ -36,17 +37,11 @@ module Services
         assert_equal 'Not a csv file', Import.first.message
       end
 
-      should 'leave a message in the imports table if it is not a csv file' do
-
-      end
-
       should 'create transactions records from the import file' do
-
-      end
-
-
-      should 'raise a message if there is no import file provided' do
-
+        Services::ImportFile.new.call(@format_problem_file)
+        assert_equal 1, Import.count
+        assert Import.first.message.present?, 'There should be an import message'
+        assert_equal 'Format problem', Import.first.message
       end
 
       should 'raise a message if there are formatting problems with the import file' do
