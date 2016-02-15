@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160213213352) do
     t.text     "filename"
     t.text     "filepath"
     t.text     "message"
+    t.text     "detail"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

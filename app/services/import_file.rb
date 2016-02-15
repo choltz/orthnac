@@ -9,13 +9,19 @@ module Services
 
       if file.original_filename =~ /csv$/
         IO.copy_stream file.path, destination
+
+        begin
+          Services::ImportTransactions.new.call(destination)
+        rescue StandardError => e
+          # Capture all import issues and raise as a message
+          message = e.message
+          detail  = e.backtrace
+        end
       else
         message = 'Not a csv file'
       end
 
-      Services::ImportTransactions.new.call(file)
-
-      Import.create! filename: file.original_filename, filepath: destination, message: message
+      Import.create! filename: file.original_filename, filepath: destination, message: message, detail: detail
     end
   end
 end
