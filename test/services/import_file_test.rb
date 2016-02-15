@@ -2,14 +2,13 @@ require_relative '../test_helper'
 
 module Services
   class ImportFileTest < ActiveSupport::TestCase
-    context "import file sevice tests" do
+    context 'import file sevice tests' do
       setup do
-        File.delete('imports/test_transactions1.csv') if File.exists?('imports/test_transactions1.csv')
+        import_files = %w{ imports/test_transactions1.csv imports/test_not_csv.txt }
+        import_files.each{ |file| File.delete(file) if File.exist?(file) }
 
-        @file = ActionDispatch::Http::UploadedFile.new  filename:  'test_transactions1.csv',
-                                                        type:      'text/comma-separated-values',
-                                                        name:      'import_file',
-                                                        tempfile:  File.open('test/data/test_transactions1.csv')
+        @file         = create_attachment_file 'test_transactions1.csv'
+        @non_csv_file = create_attachment_file 'test_not_csv.txt'
       end
 
       should 'copy the file to the imports folder' do
@@ -25,6 +24,20 @@ module Services
         assert_equal 'imports/test_transactions1.csv', Import.first.filepath
       end
 
+      should 'not copy the file if it is not a csv file' do
+        Services::ImportFile.new.call(@non_csv_file)
+        assert !File.exist?('imports/test_not_csv.txt')
+      end
+
+      should 'create an import record if it is not a csv file' do
+        Services::ImportFile.new.call(@non_csv_file)
+        assert_equal 1, Import.count
+      end
+
+      should 'leave a message in the imports table if it is not a csv file' do
+
+      end
+
       should 'create transactions records from the import file' do
 
       end
@@ -37,6 +50,14 @@ module Services
       should 'raise a message if there are formatting problems with the import file' do
 
       end
+    end
+
+    def create_attachment_file(filename, type: 'text/comma-separated-values')
+      ActionDispatch::Http::UploadedFile.new  filename:  filename,
+                                              type:      type,
+                                              name:      'import_file',
+                                              tempfile:  File.open("test/data/#{filename}")
+
     end
   end
 end
