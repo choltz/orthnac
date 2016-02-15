@@ -18,6 +18,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'shoulda-context'
   gem 'simplecov'
+  gem 'thin'
 end
 
 group :development do

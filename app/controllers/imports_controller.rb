@@ -1,6 +1,9 @@
 class ImportsController < ApplicationController
   def download
-    file = File.open(Import.find(1).filepath, 'r')
+    #
+    # TODO: This is fragile
+    #
+    file = File.open(Import.find(params[:id]).filepath, 'r')
     send_file file, type: 'application/octet-stream'
   end
 
