@@ -1,5 +1,3 @@
-require_relative 'common_steps'
-
 Before do
   File.delete('imports/test_transactions1.csv') if File.exist?('imports/test_transactions1.csv')
   File.delete('imports/test_not_csv.txt')       if File.exist?('imports/test_not_csv.txt')
@@ -16,10 +14,6 @@ end
 Given(/^I attach "([^"]*)" to "([^"]*)"$/) do |file, field|
   attach_file(field, file)
   click_button 'Import'
-end
-
-Then(/^page should redirect to to the import index page$/) do
-  assert_equal import_path, page.current_path
 end
 
 Then(/^"([^"]*)" should exist$/) do |file|
@@ -39,20 +33,16 @@ Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
 end
 
 Then(/^shows a "([^"]*)" link in the "([^"]*)" table$/) do |type, table|
-  if type == "download"
+  if type == 'download'
     elements = page.all("#{table} tbody tr td")
     assert_equal 'play_for_work', elements.last.text
-  elsif type == "error"
+  elsif type == 'error'
     elements = page.all("#{table} tbody tr td")
     assert_equal 'error', elements.last.text
   end
 end
 
 Given(/^I attach "([^"]*)" to 'import_file'$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then(/^page should redirect to the import index page$/) do
   pending # Write code here that turns the phrase above into concrete actions
 end
 

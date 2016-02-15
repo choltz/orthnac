@@ -6,7 +6,7 @@ Feature: Import transactions
 Scenario: imports a file and shows a history of imports
   Given I am on the "imports" page
   And I attach "test/data/test_transactions1.csv" to "import_file"
-  Then page should redirect to to the import index page
+  Then page should redirect to "/imports"
   And "imports/test_transactions1.csv" should exist
   And redirect to "/imports"
   And the ".import-table" table has "1" rows
@@ -29,7 +29,7 @@ Scenario: download csv file
 Scenario: import format errors
   Given I am on the "imports" page
   And I attach "test/data/test_format_problem.csv" to "import_file"
-  Then page should redirect to the import index page
-  And "file" should not be copied to the "imports" folder
+  Then page should redirect to "/imports"
+  And "imports/test_format_problem.csv" should not exist
   And shows the message "CSV format problem"
   And the ".import-table" table has "0" rows
