@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160213213352) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.string   "account_number"
+    t.text     "account_number"
     t.datetime "posted_at"
     t.datetime "transaction_at"
     t.text     "category"

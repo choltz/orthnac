@@ -1,7 +1,7 @@
 class CreateTransactionsTable < ActiveRecord::Migration
   def change
     create_table :transactions do |t|
-     t.string   :account_number
+     t.text     :account_number
      t.datetime :posted_at
      t.datetime :transaction_at
      t.text     :category
