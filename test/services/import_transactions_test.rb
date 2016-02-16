@@ -4,12 +4,12 @@ module Services
   class ImportTransactionsTest < ActiveSupport::TestCase
     context 'import transactions sevice tests' do
       should 'import the transactions in the file' do
-        Services::ImportTransactions.new.call 'test/data/test_transactions1.csv'
+        Services::ImportTransactions.call 'test/data/test_transactions1.csv'
         assert_equal 15, Transaction.count
       end
 
       should 'clean imported field valuess' do
-        Services::ImportTransactions.new.call 'test/data/test_transactions_white_space.csv'
+        Services::ImportTransactions.call 'test/data/test_transactions_white_space.csv'
         assert_equal 1, Transaction.count
 
         transaction = Transaction.first
@@ -27,25 +27,25 @@ module Services
       end
 
       should 'not import overlapping transactions' do
-        Services::ImportTransactions.new.call 'test/data/test_transactions1.csv'
-        Services::ImportTransactions.new.call 'test/data/test_transactions2.csv'
+        Services::ImportTransactions.call 'test/data/test_transactions1.csv'
+        Services::ImportTransactions.call 'test/data/test_transactions2.csv'
         assert_equal 20, Transaction.count
       end
 
       should 'raise an error if there are formatting problems in the csv file' do
-        Services::ImportTransactions.new.call 'test/data/test_format_problem.csv'
+        Services::ImportTransactions.call 'test/data/test_format_problem.csv'
       end
 
       should 'raise an error if no file is provided' do
-        Services::ImportTransactions.new.call
+        Services::ImportTransactions.call
       end
 
       should 'raise an error if the file does not exist' do
-        Services::ImportTransactions.new.call 'test/data/there_is_no_file.csv'
+        Services::ImportTransactions.call 'test/data/there_is_no_file.csv'
       end
 
       should 'raise an error when importing file that is not a csv file' do
-        Services::ImportTransactions.new.call 'test/data/test_not_csv.txt'
+        Services::ImportTransactions.call 'test/data/test_not_csv.txt'
       end
     end
   end
