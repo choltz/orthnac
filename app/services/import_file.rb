@@ -6,10 +6,9 @@ module Services
     # file - import file path
     def call(file)
       destination = "imports/#{file.original_filename}"
+      IO.copy_stream file.path, destination
 
       if file.original_filename =~ /csv$/
-        IO.copy_stream file.path, destination
-
         begin
           Services::ImportTransactions.new.call(destination)
         rescue StandardError => e

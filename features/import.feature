@@ -16,7 +16,7 @@ Scenario: imports a non-csv file
   Given I am on the "imports" page
   And I attach "test/data/test_not_csv.txt" to "import_file"
   Then page should redirect to "/imports"
-  And "imports/test_not_csv.txt" should not exist
+  And "imports/test_not_csv.txt" should exist
   And the ".import-table" table has "1" rows
   And shows a "!" link in the ".import-table" table
 

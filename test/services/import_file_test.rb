@@ -25,9 +25,9 @@ module Services
         assert_equal 'imports/test_transactions1.csv', Import.first.filepath
       end
 
-      should 'not copy the file if it is not a csv file' do
+      should 'copy the file, even if it is not a csv file' do
         Services::ImportFile.new.call(@non_csv_file)
-        assert !File.exist?('imports/test_not_csv.txt')
+        assert File.exist?('imports/test_not_csv.txt')
       end
 
       should 'create an import record if it is not a csv file' do

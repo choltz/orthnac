@@ -1,6 +1,23 @@
-<div class="message">
-  <%= @import.message %>
-</div>
-<div class="detail">
-  <%= @import.detail %>
+<div class="row">
+  <div class="col s12 ">
+    <div class="card ">
+      <div class="card-content grey-text text-darken-2">
+        <div class="row">
+          <div class="col s1">
+            <i class="material-icons medium red-text text-lighten-2">info_outline</i>
+          </div>
+          <div class="col s11">
+            <span class="card-title message"><%= @import.message %></span>
+            <div class="detail">
+              <%= @import.detail %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <%= link_to "Return to import history",  import_path %>
+        <%= link_to "Download this import file", import_download_path(@import.id) %>
+      </div>
+    </div>
+  </div>
 </div>

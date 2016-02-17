@@ -15,7 +15,7 @@
 /log/*
 !/log/.keep
 /tmp
-imports/*.csv
+imports/*.*
 
 coverage/*
 .byebug_history
