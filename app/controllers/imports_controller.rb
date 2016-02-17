@@ -11,6 +11,10 @@ class ImportsController < ApplicationController
     @imports = Import.all.order('created_at desc')
   end
 
+  def message
+    @import = Import.find_by_id(params[:id])
+  end
+
   def upload
     Services::ImportFile.new.call params[:import_file]
     redirect_to import_path

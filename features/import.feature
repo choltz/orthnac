@@ -26,10 +26,9 @@ Scenario: download csv file
   And I click the "download" link in the ".import-table" table
   Then "test_transactions1.csv" should be downloaded
 
-Scenario: import format errors
+Scenario: show import error detail
   Given I am on the "imports" page
-  And I attach "test/data/test_format_problem.csv" to "import_file"
-  Then page should redirect to "/imports"
-  And "imports/test_format_problem.csv" should not exist
-  And shows the message "CSV format problem"
-  And the ".import-table" table has "0" rows
+  And I attach "test/data/test_not_csv.txt" to "import_file"
+  And I click the "error" link in the ".import-table" table
+  Then page should redirect to "/imports/message/1"
+  And the ".message" block should read "Not a csv file"

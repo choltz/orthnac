@@ -13,7 +13,7 @@
         <td><%= import.created_at.strftime('%m/%d/%Y') %></td>
         <td class="import-table-download">
           <% if import.message.present? %>
-            <%= import_table_circle_link text: '<b>!</b>',      url: import_download_path(import), color: 'red lighten-2' %>
+            <%= import_table_circle_link text: '<b>!</b>',      url: import_message_path(import), color: 'red lighten-2' %>
           <% else %>
             <%= import_table_circle_link icon: 'play_for_work', url: import_download_path(import), color: 'brown lighten-2' %>
           <% end %>
