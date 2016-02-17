@@ -1,0 +1,5 @@
+Originating Account Number,Posting Date,Trans Date,Type,Category,Merchant Name,Merchant City,Merchant State,Description,Transaction Type,Amount,Reference Number,
+
+"XXXX-1234","01/21/2016","01/20/2016","Debit","Entertainment","Amazon.com               ","AMZN.COM/BILL","WA ","Book Stores","Purchase","$19.35","12332866020000936790577",
+"XXXX-1234","01/21/2016","01/19/2016","Debit","Groceries","MARKET       ","SMALLVILLE ","KA ","Grocery Stores  Supermarkets","Purchase","$91.29","51238076020150000212789",
+"XXXX-1234","01/21/2016","01/19/2016","Debit","Entertainment","Movies       ","SMALLVILLE ","KA ","Movie Theater","Purchase","$40.00","51238076020150000212790",

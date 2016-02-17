@@ -29,7 +29,7 @@ module Services
       should 'not import overlapping transactions' do
         Services::ImportTransactions.call 'test/data/test_transactions1.csv'
         Services::ImportTransactions.call 'test/data/test_transactions2.csv'
-        assert_equal 20, Transaction.count
+        assert_equal 16, Transaction.count
       end
 
       should 'raise an error if there are formatting problems in the csv file' do
@@ -37,15 +37,20 @@ module Services
       end
 
       should 'raise an error if no file is provided' do
-        Services::ImportTransactions.call
+        exception = assert_raises(Exception) { Services::ImportTransactions.call '' }
+        assert_equal 'No file given', exception.message
       end
 
       should 'raise an error if the file does not exist' do
-        Services::ImportTransactions.call 'test/data/there_is_no_file.csv'
+        file = 'test/data/there_is_no_file.csv'
+        exception = assert_raises(Exception) { Services::ImportTransactions.call file }
+        assert_equal "File #{file} does not exist", exception.message
       end
 
-      should 'raise an error when importing file that is not a csv file' do
-        Services::ImportTransactions.call 'test/data/test_not_csv.txt'
+      should 'raise an error when importing file that is not a csv file buh' do
+        file = 'test/data/test_not_csv.txt'
+        exception = assert_raises(Exception) { Services::ImportTransactions.call file }
+        assert_equal "File #{file} is not a csv file", exception.message
       end
     end
   end

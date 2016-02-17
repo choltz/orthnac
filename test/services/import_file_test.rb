@@ -38,10 +38,10 @@ module Services
       end
 
       should 'create transactions records from the import file' do
-        Services::ImportFile.new.call(@format_problem_file)
+        Services::ImportFile.new.call(@non_csv_file)
         assert_equal 1, Import.count
         assert Import.first.message.present?, 'There should be an import message'
-        assert_equal 'Format problem', Import.first.message
+        assert_equal 'Not a csv file', Import.first.message
       end
 
       should 'raise a message if there are formatting problems with the import file' do
