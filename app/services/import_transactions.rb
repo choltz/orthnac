@@ -39,7 +39,7 @@ module Services
     # Returns: hash appropriate for AR update or create
     def data(row)
       amount = (row['Type'] == 'Debit' ? '' : '-') +
-               row['Amount'].delete('$').gsub(/[\(\)]/, '')
+               row['Amount'].gsub(/[\$\,\(\)]/, '')
 
       { account_number:   row['Originating Account Number'],
         posted_at:        Date.strptime(row['Posting Date'], '%m/%d/%Y'),
