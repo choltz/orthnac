@@ -28,10 +28,6 @@ Then(/^redirect to "([^"]*)"$/) do |path|
   assert current_path == path
 end
 
-Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
-  assert_equal count.to_i, page.all("#{table} tbody tr").count
-end
-
 Then(/^shows a "([^"]*)" link in the "([^"]*)" table$/) do |type, table|
   if type == 'download'
     elements = page.all("#{table} tbody tr td")
@@ -47,10 +43,6 @@ Given(/^I attach "([^"]*)" to 'import_file'$/) do |arg1|
 end
 
 Given(/^I go to the "([^"]*)" page$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then(/^the "([^"]*)" has "([^"]*)" rows$/) do |arg1, arg2|
   pending # Write code here that turns the phrase above into concrete actions
 end
 

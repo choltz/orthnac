@@ -7,6 +7,14 @@ Then(/^the "([^"]*)" block should read "([^"]*)"$/) do |selector, text|
   assert_equal text, elements.first.text
 end
 
+Given(/^I navigate to the "([^"]*)" page$/) do |route|
+  visit "/#{route}"
+end
+
+Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
+  assert_equal count.to_i, page.all("#{table} tbody tr").count
+end
+
 # Public: return the current relative path
 def current_path
   URI.parse(current_url).path
