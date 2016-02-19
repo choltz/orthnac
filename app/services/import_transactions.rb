@@ -38,6 +38,9 @@ module Services
     #
     # Returns: hash appropriate for AR update or create
     def data(row)
+      amount = (row['Type'] == 'Debit' ? '' : '-') +
+               row['Amount'].delete('$').gsub(/[\(\)]/, '')
+
       { account_number:   row['Originating Account Number'],
         posted_at:        Date.strptime(row['Posting Date'], '%m/%d/%Y'),
         transaction_at:   Date.strptime(row['Trans Date'],   '%m/%d/%Y'),
@@ -47,7 +50,7 @@ module Services
         merchant_state:   row['Merchant State'],
         description:      row['Description'],
         transaction_type: row['Transaction Type'],
-        amount:           row['Amount'].delete('$'),
+        amount:           amount,
         reference:        row['Reference Number'] }
     end
 
