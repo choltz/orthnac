@@ -3,7 +3,7 @@ Feature: Basic Navigation
 Scenario: navigate to the home page
   Given I navigate to the "/imports" page
   And I click on the "dashboard-desktop" Link
-  Then page should redirect to "/"
+  Then page should redirect to "/dashboard"
 
 Scenario: navigate to the imports page
   Given I navigate to the "/" page
@@ -18,4 +18,4 @@ Scenario: navigate to the transactions page
 Scenario: navigate to the dashboard
   Given I navigate to the "/" page
   And I click on the "dashboard-desktop" Link
-  Then page should redirect to "/"
+  Then page should redirect to "/dashboard"
