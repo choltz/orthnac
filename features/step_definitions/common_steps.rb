@@ -11,6 +11,10 @@ Given(/^I navigate to the "([^"]*)" page$/) do |route|
   visit "/#{route}"
 end
 
+Given(/^I click on the "([^"]*)" Link$/) do |link|
+  click_link link
+end
+
 Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
   assert_equal count.to_i, page.all("#{table} tbody tr").count
 end

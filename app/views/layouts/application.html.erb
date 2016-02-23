@@ -9,32 +9,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render 'layouts/navigation' %>
 
-  <nav>
-    <div class="container">
-      <a href="#" class="brand-logo">Transaction Analysis</a>
-
-      <ul class="hide-on-med-and-down nav-items">
-        <li class="selected"><a href="#!">Dashboard</a></li>
-        <li><a href="#!">Import</a></li>
-        <li><a href="#!">Detail</a></li>
-      </ul>
-      <ul id="slide-out" class="side-nav">
-        <li class="active"><a href="#!">Dashboard</a></li>
-        <li><a href="#!">Import</a></li>
-        <li><a href="#!">Detail</a></li>
-      </ul>
-      <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-    </div>
-  </nav>
-
-  <!-- Page Layout here -->
   <main>
     <div class="container">
       <%= yield %>
     </div>
   </main>
-
 </body>
 
 <script language="javascript">

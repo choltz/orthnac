@@ -1,0 +1,5 @@
+<% %w{ dashboard imports transactions }.each do |link| %>
+  <li class="<%= controller_name == link ? 'selected' : '' %>">
+    <%= link_to link.capitalize, "/#{link}", id: "#{link}-#{context}" %>
+  </li>
+<% end %>
