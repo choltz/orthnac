@@ -1,6 +1,7 @@
 @import "materialize/components/color";
 $primary-color: color("teal", "darken-3") !default;
 @import 'materialize';
+@import 'dashboard';
 @import 'import';
 @import 'transaction';
 
