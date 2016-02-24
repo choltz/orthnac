@@ -14,8 +14,8 @@ module Services
 
         transaction = Transaction.first
         assert_equal 'XXXX-1234',                             transaction.account_number
-        assert_equal Date.strptime('01/28/2016', '%m/%d/%Y'), transaction.posted_at
-        assert_equal Date.strptime('01/26/2016', '%m/%d/%Y'), transaction.transaction_at
+        assert_equal Date.strptime('01/28/2016', '%m/%d/%Y'), transaction.posted_at.to_date
+        assert_equal Date.strptime('01/26/2016', '%m/%d/%Y'), transaction.transaction_at.to_date
         assert_equal 'Health & Medical',                      transaction.category
         assert_equal 'DENTIST OFFICE',                        transaction.merchant_name
         assert_equal 'SMALLVILLE',                            transaction.merchant_city
