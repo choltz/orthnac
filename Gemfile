@@ -14,7 +14,7 @@ gem 'uglifier'
 group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'shoulda-context'
   gem 'simplecov'
@@ -26,4 +26,8 @@ group :development do
   gem 'binding_of_caller'
   gem 'rubocop'
   gem 'spring'
+end
+
+group :test do
+  gem 'cucumber-timecop', require: false
 end
