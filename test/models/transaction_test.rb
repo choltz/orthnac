@@ -13,7 +13,7 @@ class TransactionTest < ActiveSupport::TestCase
 
     should 'return all transactions since the beginning of the month' do
       references = Transaction.monthly_to_date.pluck(:reference)
-      assert (references - ['1','2','4']).empty?
+      assert_equal true, (references - ['1','2','4']).empty?
     end
 
     should 'sum the amount spent since the beginning of the month' do

@@ -22,13 +22,17 @@ class Transaction < ActiveRecord::Base
       monthly_to_date.sum(:amount)
     end
 
+    # Public: Calculate the total spending per month, grouped by month
+    #
+    # Returns: Array of aggregated amounts
     def amount_sums_by_month
-      # select strftime('%Y-%m', transaction_at) as month, sum(amount)
-      # from transactions
-      # where transaction_at between '2015-02-24' and '2016-02-24'
-      # and transaction_type <> 'Payment'
-      # group by strftime('%Y-%m', transaction_at)
-      # order by month;
+      select("strftime('%Y-%m', transaction_at) as month,
+              strftime('%m', transaction_at) as month_number,
+              sum(amount) as sum")
+        .between(1.year.ago.beginning_of_month, Date.today)
+        .where("transaction_type <> 'Payment'")
+        .group("strftime('%Y-%m', transaction_at)")
+        .order('month')
     end
   end
 end
