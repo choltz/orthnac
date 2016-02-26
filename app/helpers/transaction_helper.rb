@@ -3,6 +3,7 @@ module TransactionHelper
   def format_amount(amount)
     formatted_amount = number_to_currency(amount, negative_format: "(%u%n)")
     css_class        = amount < 0 ? 'negative-amount' : ''
+    css_class        = amount > 200 ? 'warning' : css_class
     "<span class=\"#{css_class}\">#{formatted_amount}</span>".html_safe
   end
 end
