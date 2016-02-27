@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213213352) do
+ActiveRecord::Schema.define(version: 20160227200301) do
 
   create_table "imports", force: :cascade do |t|
     t.text     "filename"
@@ -37,5 +37,13 @@ ActiveRecord::Schema.define(version: 20160213213352) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "transactions", ["account_number"], name: "index_transactions_on_account_number"
+  add_index "transactions", ["amount"], name: "index_transactions_on_amount"
+  add_index "transactions", ["category"], name: "index_transactions_on_category"
+  add_index "transactions", ["posted_at"], name: "index_transactions_on_posted_at"
+  add_index "transactions", ["reference"], name: "index_transactions_on_reference"
+  add_index "transactions", ["transaction_at"], name: "index_transactions_on_transaction_at"
+  add_index "transactions", ["transaction_type"], name: "index_transactions_on_transaction_type"
 
 end
