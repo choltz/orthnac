@@ -8,9 +8,11 @@ module Services
       destination = "imports/#{file.original_filename}"
       IO.copy_stream file.path, destination
 
+      import = Import.create! filename: file.original_filename, filepath: destination
+
       if file.original_filename =~ /csv$/
         begin
-          Services::ImportTransactions.new.call(destination)
+          Services::ImportTransactions.new.call(import)
         rescue StandardError => e
           # Capture all import issues and raise as a message
           message = e.message
@@ -20,7 +22,7 @@ module Services
         message = 'Not a csv file'
       end
 
-      Import.create! filename: file.original_filename, filepath: destination, message: message, detail: detail
+      import.update_attributes message: message, detail: detail if message.present? || detail.present?
     end
   end
 end

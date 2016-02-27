@@ -12,6 +12,7 @@ class CreateTransactionsTable < ActiveRecord::Migration
      t.text     :transaction_type
      t.decimal  :amount, precision: 7, scale: 2
      t.text     :reference
+     t.integer  :import_id
      t.timestamps
     end
   end

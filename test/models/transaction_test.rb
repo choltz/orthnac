@@ -7,8 +7,9 @@ class TransactionTest < ActiveSupport::TestCase
   should validate_presence_of :transaction_at
   should validate_presence_of :transaction_type
   should validate_presence_of :amount
-
+  should validate_presence_of :import_id
   should validate_uniqueness_of :reference
+  should belong_to            :import
 
   setup do
     date = Date.today.beginning_of_month
@@ -32,21 +33,20 @@ class TransactionTest < ActiveSupport::TestCase
 
   context 'categories' do
     should 'return a list of all categories with slugged codes' do
-      categories = [['Automotive', 'automotive'],
+      categories = [['Automotive',       'automotive'],
+                    ['Entertainment',    'entertainment'],
                     ['Home & Household', 'home_household'],
-                    ['Medical', 'medical'],
-                    ['Entertainment',
-                     'entertainment']]
+                    ['Medical',          'medical']]
 
       assert_equal categories, Transaction.categories
     end
 
     should 'return a list of all category names' do
-      assert_equal ['Automotive', 'Home & Household', 'Medical', 'Entertainment'], Transaction.category_names
+      assert_equal ['Automotive', 'Entertainment', 'Home & Household', 'Medical'], Transaction.category_names
     end
 
     should 'return a list of all category codes' do
-      assert_equal %w(automotive home_household medical entertainment), Transaction.category_codes
+      assert_equal %w(automotive entertainment home_household medical), Transaction.category_codes
     end
   end
 
@@ -57,6 +57,7 @@ class TransactionTest < ActiveSupport::TestCase
     Transaction.create! account_number:   'test account',
                         amount:           amount,
                         category:         category,
+                        import_id:        1,
                         reference:        reference,
                         transaction_type: type,
                         transaction_at:   date

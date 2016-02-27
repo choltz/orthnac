@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160227200301) do
     t.text     "transaction_type"
     t.decimal  "amount",           precision: 7, scale: 2
     t.text     "reference"
+    t.integer  "import_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160227200301) do
   add_index "transactions", ["account_number"], name: "index_transactions_on_account_number"
   add_index "transactions", ["amount"], name: "index_transactions_on_amount"
   add_index "transactions", ["category"], name: "index_transactions_on_category"
+  add_index "transactions", ["import_id"], name: "index_transactions_on_import_id"
   add_index "transactions", ["posted_at"], name: "index_transactions_on_posted_at"
   add_index "transactions", ["reference"], name: "index_transactions_on_reference"
   add_index "transactions", ["transaction_at"], name: "index_transactions_on_transaction_at"

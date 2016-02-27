@@ -8,21 +8,19 @@ module Services
     # transactions table
     #
     # file - path of the file to import
-    def call(file)
-      raise 'No file given'                  if file.blank?
-      raise "File #{file} does not exist"    unless File.exist?(file)
-      raise "File #{file} is not a csv file" if file !~ /\.csv$/
+    def call(import)
+      raise 'No import model given'                     if import.blank?
+      raise "File #{import.filepath} does not exist"    unless File.exist?(import.filepath)
+      raise "File #{import.filepath} is not a csv file" if import.filepath !~ /\.csv$/
 
-      CSV.foreach(file, headers: true) do |row|
+      CSV.foreach(import.filepath, headers: true) do |row|
         row = trim_data(row)
 
         next if row['Originating Account Number'].blank?
 
         if !Transaction.exists?(reference: row['Reference Number'])
-          Transaction.create! data(row)
+          Transaction.create! data(row, import)
         end
-
-        file
       end
     end
 
@@ -30,10 +28,11 @@ module Services
 
     # Internal: Format data to play nice with AR
     #
-    # row - row hash from CSV construct
+    # row    - row hash from CSV construct
+    # import - import model
     #
     # Returns: hash appropriate for AR update or create
-    def data(row)
+    def data(row, import)
       amount = (row['Type'] == 'Debit' ? '' : '-') +
                row['Amount'].gsub(/[\$\,\(\)]/, '')
 
@@ -47,7 +46,8 @@ module Services
         description:      row['Description'],
         transaction_type: row['Transaction Type'],
         amount:           amount,
-        reference:        row['Reference Number'] }
+        reference:        row['Reference Number'],
+        import_id:        import.id }
     end
 
     # Internal: strip leading and trailing space from each value in the row
