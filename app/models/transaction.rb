@@ -26,8 +26,9 @@ class Transaction < ActiveRecord::Base
   class << self
     # Public: Get a list of categories and codes
     def categories
-      Transaction.select('distinct(category) as category')
-                 .order(:category)
+      Transaction.select('category, sum(amount) as sum')
+                 .group('category')
+                 .order('sum desc')
                  .map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
     end
 

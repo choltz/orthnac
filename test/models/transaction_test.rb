@@ -33,20 +33,20 @@ class TransactionTest < ActiveSupport::TestCase
 
   context 'categories' do
     should 'return a list of all categories with slugged codes' do
-      categories = [['Automotive',       'automotive'],
+      categories = [['Home & Household', 'home_household'],
+                    ['Automotive',       'automotive'],
                     ['Entertainment',    'entertainment'],
-                    ['Home & Household', 'home_household'],
                     ['Medical',          'medical']]
 
       assert_equal categories, Transaction.categories
     end
 
     should 'return a list of all category names' do
-      assert_equal ['Automotive', 'Entertainment', 'Home & Household', 'Medical'], Transaction.category_names
+      assert_equal ['Home & Household', 'Automotive', 'Entertainment', 'Medical'], Transaction.category_names
     end
 
     should 'return a list of all category codes' do
-      assert_equal %w(automotive entertainment home_household medical), Transaction.category_codes
+      assert_equal %w(home_household automotive entertainment medical), Transaction.category_codes
     end
   end
 
