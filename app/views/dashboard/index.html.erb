@@ -19,10 +19,27 @@
           <span class="card-title">Spending totals by month</span>
 
           <div class="amount-sums-by-month">
-            Graph goes here
+
+            <table class="dashboard-sums-table bordered striped responsive-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Transaction.amount_sums_by_month.each do |item| %>
+                  <tr>
+                    <td><%= item.month %></td>
+                    <td><%= number_to_currency(item.sum) %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+
           </div>
           <div class="amount-sums-by-month-for-tests">
-            Get real data here - hidden for tests
+            Test data here - hidden, for tests only
             <% Transaction.amount_sums_by_month.each do |item| %>
               <span class="month-<%= item.month %>"><%= number_to_currency(item.sum) %></span>
             <% end %>

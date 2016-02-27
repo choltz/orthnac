@@ -9,7 +9,7 @@ class Transaction < ActiveRecord::Base
 
   # Return all transactions between the specified start and end date
   scope :between, ->(start_date, end_date) {
-    where('transaction_at between ? and ?', start_date, end_date)
+    where('transactions.transaction_at between ? and ?', start_date, end_date)
   }
 
   # Return all transactions, except for payments, since he beginning of the
@@ -29,17 +29,30 @@ class Transaction < ActiveRecord::Base
       monthly_to_date.sum(:amount)
     end
 
-    # Public: Calculate the total spending per month, grouped by month
+    # Public: Calculate the total spending per month, grouped by month,
+    #         include sums by every category
     #
     # Returns: Array of aggregated amounts
     def amount_sums_by_month
-      select("strftime('%Y-%m', transaction_at) as month,
-              strftime('%m', transaction_at) as month_number,
-              sum(amount) as sum")
-        .between(1.year.ago.beginning_of_month, Date.today)
-        .where("transaction_type <> 'Payment'")
-        .group("strftime('%Y-%m', transaction_at)")
-        .order('month')
+      # Get a list of slugged categories
+      categories = Transaction.select('distinct(category) as category')
+                              .map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
+
+      query = select("strftime('%Y-%m', transactions.transaction_at) as month,
+                      strftime('%m', transactions.transaction_at) as month_number,
+                      sum(transactions.amount) as sum")
+
+      categories.each.with_index do |(category_name, category), index|
+        query = query.select("sum(c#{index}.amount) as #{category}_sum")
+        query = query.joins("left join transactions c#{index} on c#{index}.id = transactions.id and c#{index}.category = '#{category_name}'")
+      end
+
+      query = query.between(1.year.ago.beginning_of_month, Date.today)
+              .where("transactions.transaction_type <> 'Payment'")
+              .group("strftime('%Y-%m', transactions.transaction_at)")
+              .order('month')
+
+      query
     end
   end
 end
