@@ -7,7 +7,7 @@
           <span class="card-title">Spent this month</span>
 
           <h5 class="monthly-sum-to-date">
-            <%= Transaction.monthly_sum_to_date %>
+            <%= number_to_currency(Transaction.monthly_sum_to_date) %>
           </h5>
         </div>
       </div>
