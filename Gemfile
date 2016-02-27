@@ -13,6 +13,7 @@ gem 'uglifier'
 
 group :development, :test do
   gem 'awesome_print'
+  gem 'binding_of_caller'
   gem 'byebug'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'

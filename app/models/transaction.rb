@@ -21,6 +21,22 @@ class Transaction < ActiveRecord::Base
 
   # Class Methods
   class << self
+    # Public: Get a list of categories and codes
+    def categories
+      Transaction.select('distinct(category) as category')
+                 .map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
+    end
+
+    # Public: Get an array of category codes
+    def category_codes
+      categories.map(&:second)
+    end
+
+    # Public: Get an array of category codes
+    def category_names
+      categories.map(&:first)
+    end
+
     # Public: Return the amount of expenditures that have occurred since the
     # first of the month
     #
@@ -30,29 +46,24 @@ class Transaction < ActiveRecord::Base
     end
 
     # Public: Calculate the total spending per month, grouped by month,
-    #         include sums by every category
+    #         include monthly sums by every category
     #
     # Returns: Array of aggregated amounts
-    def amount_sums_by_month
-      # Get a list of slugged categories
-      categories = Transaction.select('distinct(category) as category')
-                              .map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
-
+    def sums_by_month
       query = select("strftime('%Y-%m', transactions.transaction_at) as month,
                       strftime('%m', transactions.transaction_at) as month_number,
                       sum(transactions.amount) as sum")
 
+      # Compute the sum for every category
       categories.each.with_index do |(category_name, category), index|
         query = query.select("sum(c#{index}.amount) as #{category}_sum")
         query = query.joins("left join transactions c#{index} on c#{index}.id = transactions.id and c#{index}.category = '#{category_name}'")
       end
 
-      query = query.between(1.year.ago.beginning_of_month, Date.today)
-              .where("transactions.transaction_type <> 'Payment'")
-              .group("strftime('%Y-%m', transactions.transaction_at)")
-              .order('month')
-
-      query
+      query.between(1.year.ago.beginning_of_month, Date.today)
+           .where("transactions.transaction_type <> 'Payment'")
+           .group("strftime('%Y-%m', transactions.transaction_at)")
+           .order('month')
     end
   end
 end

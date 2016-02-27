@@ -10,19 +10,19 @@ class TransactionTest < ActiveSupport::TestCase
 
   should validate_uniqueness_of :reference
 
+  setup do
+    date = Date.today.beginning_of_month
+
+    create_transaction 'Purchase',       10.00,   date + 1, '1a', 'Automotive'
+    create_transaction 'Purchase',       20.00,   date + 2, '2b', 'Home & Household'
+    create_transaction 'Payment',        -10.00,  date + 3, '3c', 'Medical'
+    create_transaction 'Credit Voucher', -10.00,  date + 4, '4d', 'Entertainment'
+  end
+
   context 'montly transactions' do
-    setup do
-      date = Date.today.beginning_of_month
-
-      create_transaction 'Purchase',       10.00,   date + 1, 1
-      create_transaction 'Purchase',       20.00,   date + 2, 2
-      create_transaction 'Payment',        -10.00,  date + 3, 3
-      create_transaction 'Credit Voucher', -10.00,  date + 4, 4
-    end
-
     should 'return all transactions since the beginning of the month' do
       references = Transaction.monthly_to_date.pluck(:reference)
-      assert_equal true, (references - %w( 1 2 4 )).empty?
+      assert_equal true, (references - %w( 1a 2b 4d )).empty?
     end
 
     should 'sum the amount spent since the beginning of the month' do
@@ -30,14 +30,36 @@ class TransactionTest < ActiveSupport::TestCase
     end
   end
 
+  context 'categories' do
+    should 'return a list of all categories with slugged codes' do
+      categories = [['Automotive', 'automotive'],
+                    ['Home & Household', 'home_household'],
+                    ['Medical', 'medical'],
+                    ['Entertainment',
+                     'entertainment']]
+
+      assert_equal categories, Transaction.categories
+    end
+
+    should 'return a list of all category names' do
+      assert_equal ['Automotive', 'Home & Household', 'Medical', 'Entertainment'], Transaction.category_names
+    end
+
+    should 'return a list of all category codes' do
+      assert_equal %w(automotive home_household medical entertainment), Transaction.category_codes
+    end
+  end
+
   private
 
   # Internal: create a transaction with a default account name
-  def create_transaction(type, amount, date, reference)
-    Transaction.create! transaction_type: type,
+  def create_transaction(type, amount, date, reference, category)
+    Transaction.create! account_number:   'test account',
                         amount:           amount,
-                        transaction_at:   date,
+                        category:         category,
                         reference:        reference,
-                        account_number:   'test account'
+                        transaction_type: type,
+                        transaction_at:   date
+
   end
 end

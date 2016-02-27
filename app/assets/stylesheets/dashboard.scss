@@ -1,5 +1,12 @@
 .dashboard-page {
+  .amount-sums-by-month {
+    overflow: auto;
+  }
   .amount-sums-by-month-for-tests {
     display: none;
+  }
+
+  .amount-sums-by-month-cell {
+    white-space: nowrap;
   }
 }
