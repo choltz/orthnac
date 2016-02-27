@@ -1,4 +1,5 @@
 module Services
+  # Public: Service that creates transactions from a given import
   class ImportFile
     # Public: Create transactional records from the import file, create a record
     # that the import happened, and keep a copy of the file for future reference
@@ -8,21 +9,31 @@ module Services
       destination = "imports/#{file.original_filename}"
       IO.copy_stream file.path, destination
 
-      import = Import.create! filename: file.original_filename, filepath: destination
+      import  = Import.create! filename: file.original_filename,
+                               filepath: destination
+      results = import_transactions(import)
 
-      if file.original_filename =~ /csv$/
-        begin
-          Services::ImportTransactions.new.call(import)
-        rescue StandardError => e
-          # Capture all import issues and raise as a message
-          message = e.message
-          detail  = e.backtrace
-        end
-      else
-        message = 'Not a csv file'
-      end
+      import.update_attributes results if results.present?
+    end
 
-      import.update_attributes message: message, detail: detail if message.present? || detail.present?
+    private
+
+    # Internal: Import transactions. If there's a problem, capture the message
+    # and return it
+    #
+    # import - import model
+    #
+    # Returns: hash
+    #   message - error message
+    #   detail  - error details
+    def import_transactions(import)
+      return { message: 'Not a csv file' } if import.filepath !~ /csv$/
+      Services::ImportTransactions.new.call(import)
+    rescue StandardError => e
+      # Capture all import issues and return the message
+      { message: e.message, detail: e.backtrace }
+    else
+      {}
     end
   end
 end
