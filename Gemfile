@@ -17,13 +17,13 @@ group :development, :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'shoulda-context'
+  gem 'shoulda-matchers'
   gem 'simplecov'
   gem 'thin'
 end
 
 group :development do
   gem 'better_errors'
-  gem 'binding_of_caller'
   gem 'rubocop'
   gem 'spring'
 end

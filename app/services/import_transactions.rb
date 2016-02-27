@@ -18,11 +18,7 @@ module Services
 
         next if row['Originating Account Number'].blank?
 
-        transaction = Transaction.find_by(reference: row['Reference Number'])
-
-        if transaction.present?
-          transaction.update! data(row)
-        else
+        if !Transaction.exists?(reference: row['Reference Number'])
           Transaction.create! data(row)
         end
 
