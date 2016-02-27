@@ -67,7 +67,7 @@ class Transaction < ActiveRecord::Base
       query.between(1.year.ago.beginning_of_month, Date.today)
            .where("transactions.transaction_type <> 'Payment'")
            .group("strftime('%Y-%m', transactions.transaction_at)")
-           .order('month')
+           .order('month desc')
     end
   end
 end
