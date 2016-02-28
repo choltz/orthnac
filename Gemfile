@@ -15,6 +15,7 @@ group :development, :test do
   gem 'awesome_print'
   gem 'binding_of_caller'
   gem 'byebug'
+  gem 'capybara-webkit'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'shoulda-context'

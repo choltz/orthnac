@@ -57,3 +57,10 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
+# This gives us javascript support in feature tests
+Capybara.javascript_driver = :webkit
+
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+end
