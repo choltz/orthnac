@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require materialize-sprockets
 //= require import
+//= require settings
+//= require all_pages
 //= require_tree .

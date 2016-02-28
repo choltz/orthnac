@@ -7,10 +7,6 @@ Given(/^I am on the "([^"]*)" page$/) do |route|
   visit "/#{route}"
 end
 
-Given(/^I fill in "([^"]*)" with "([^"]*)"$/) do |field, value|
-  page.fill_in field, with: value
-end
-
 Given(/^I attach "([^"]*)" to "([^"]*)"$/) do |file, field|
   attach_file(field, file)
   click_button 'Import'
@@ -36,14 +32,6 @@ Then(/^shows a "([^"]*)" link in the "([^"]*)" table$/) do |type, table|
     elements = page.all("#{table} tbody tr td")
     assert_equal 'error', elements.last.text
   end
-end
-
-Given(/^I attach "([^"]*)" to 'import_file'$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Given(/^I go to the "([^"]*)" page$/) do |arg1|
-  pending # Write code here that turns the phrase above into concrete actions
 end
 
 Given(/^I click the "([^"]*)" link in the "([^"]*)" table$/) do |link, table|

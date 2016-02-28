@@ -13,12 +13,22 @@
 
   <main>
     <div class="container">
+      <% if flash[:message] %>
+        <div id="flash_message" class="flash"><%= flash[:message] %></div>
+      <% end %>
+      <% if flash[:warning] %>
+        <div id="flash_warning" class="flash"><%= flash[:warning] %></div>
+      <% end %>
+
       <%= yield %>
     </div>
   </main>
-</body>
+  <script language="javascript">
+    <%= yield :deferred_javascript -%>
 
-<script language="javascript">
-  $(".button-collapse").sideNav();
-</script>
+    app.Page.AllPages();
+
+    $(".button-collapse").sideNav();
+  </script>
+</body>
 </html>

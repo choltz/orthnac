@@ -19,7 +19,8 @@ class Transaction < ActiveRecord::Base
   # month
   scope :monthly_to_date, -> {
     where("transaction_type <> 'Payment'")
-      .between('2016-01-22', '2016-02-19')
+      .between(Date.today.beginning_of_month, Date.today)
+      # .between('2016-01-22', '2016-02-19')
   }
 
   # Class Methods

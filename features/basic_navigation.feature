@@ -19,3 +19,8 @@ Scenario: navigate to the dashboard
   Given I navigate to the "/" page
   And I click on the "dashboard-desktop" Link
   Then page should redirect to "/dashboard"
+
+Scenario: Navigate to settings page
+  Given I navigate to the "/" page
+  And I click on the "settings-desktop" Link
+  Then page should redirect to "/settings"

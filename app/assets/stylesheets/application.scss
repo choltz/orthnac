@@ -13,6 +13,16 @@ body {
   width: 1000px;
 }
 
+// Don't show the flash message; its text is captured by all_pages.js
+// and raised as a materializecss toast object.
+//
+// Cucumber won't find the flash elements if visibility is hidden or
+// the display is none, so just move it far out of the visible screen
+.flash {
+  position: absolute;
+  left:     -10000px;
+}
+
 nav {
   height: 200px;
 

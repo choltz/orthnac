@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160227200301) do
+ActiveRecord::Schema.define(version: 20160228135917) do
 
   create_table "imports", force: :cascade do |t|
     t.text     "filename"
@@ -20,6 +20,10 @@ ActiveRecord::Schema.define(version: 20160227200301) do
     t.text     "detail"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "settings", force: :cascade do |t|
+    t.integer "statement_start_day", default: 1, null: false
   end
 
   create_table "transactions", force: :cascade do |t|

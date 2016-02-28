@@ -19,18 +19,27 @@ Then(/^the "([^"]*)" table has "([^"]*)" rows$/) do |table, count|
   assert_equal count.to_i, page.all("#{table} tbody tr").count
 end
 
+Given(/^I click "([^"]*)"$/) do |arg1|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^the message "([^"]*)" should be displayed$/) do |arg1|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then(/^the "([^"]*)" field should have the value "([^"]*)"$/) do |arg1, arg2|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
 Given(/^I fill in "([^"]*)" with "([^"]*)"$/) do |field, value|
   page.fill_in field, with: value
 end
 
-Then(/^the message "([^"]*)" should be displayed$/) do |text|
-  element = page.find_by_id('flash_message')
-  assert_equal text, element.text
-end
 
-Then(/^the warning "([^"]*)" should be displayed$/) do |text|
-  element = page.find_by_id('flash_warning')
-  assert_equal text, element.text
+Then(/^the messsage "([^"]*)" should be displayed$/) do |text|
+  elements = page.all.selector('#flash_message')
+
+  assert_eqal text, elements.first.try(:text)
 end
 
 # Public: return the current relative path
