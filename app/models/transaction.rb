@@ -24,7 +24,8 @@ class Transaction < ActiveRecord::Base
 
   # Class Methods
   class << self
-    # Public: Get a list of categories and codes
+    # Public: Get a list of categories and codes sorted by those containing
+    # the highest transactional amount
     def categories
       Transaction.select('category, sum(amount) as sum')
                  .group('category')
