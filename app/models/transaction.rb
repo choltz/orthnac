@@ -19,8 +19,7 @@ class Transaction < ActiveRecord::Base
   # month
   scope :monthly_to_date, -> {
     where("transaction_type <> 'Payment'")
-      .between(Date.today.beginning_of_month, Date.today)
-      # .between('2016-01-22', '2016-02-19')
+      .between(*Setting.current_statement_dates)
   }
 
   # Class Methods
@@ -56,9 +55,12 @@ class Transaction < ActiveRecord::Base
     #
     # Returns: Array of aggregated amounts
     def sums_by_month
-      query = select("strftime('%Y-%m', transactions.transaction_at) as month,
-                      strftime('%m', transactions.transaction_at) as month_number,
-                      sum(transactions.amount) as sum")
+      end_date   = Setting.next_statement_billing_date # Date.today.beginning_of_month + Setting.statement_start_day - 1
+      start_date = end_date - 1.year
+      case_when  = sql_billing_cycle_case(start_date, end_date)
+
+      # Select sum for all transactions per billing month
+      query = select("#{case_when} as month, sum(transactions.amount) as sum")
 
       # Compute the sum for every category
       categories.each.with_index do |(category_name, category), index|
@@ -66,10 +68,31 @@ class Transaction < ActiveRecord::Base
         query = query.joins("left join transactions c#{index} on c#{index}.id = transactions.id and c#{index}.category = '#{category_name}'")
       end
 
-      query.between(1.year.ago.beginning_of_month, Date.today)
-           .where("transactions.transaction_type <> 'Payment'")
-           .group("strftime('%Y-%m', transactions.transaction_at)")
-           .order('month desc')
+      query.between(start_date, end_date)
+        .where("transactions.transaction_type <> 'Payment'")
+        .group(case_when)
+        .order('month desc')
+    end
+
+    private
+
+    # Internal: Build a case statement to organize results by statement billing
+    # month
+    #
+    # start_date - start of date range
+    # end_date   - end of date rante
+    #
+    # Example: sql_billing_cycle_case(2.months_ago, Date.today)
+    #          => 'case when transactions.transaction_at between '2015-02-23' and '2015-03-23' then '2015-02-23'
+    #                   when transactions.transaction_at between '2015-03-23' and '2015-04-23' then '2015-03-23' end
+    #
+    # Returns: string
+    def sql_billing_cycle_case(start_date, end_date)
+      case_when = DateTools.map_month(start_date, end_date, day: Setting.statement_start_day) do |date|
+        "when transactions.transaction_at between '#{date - 1.month}' and '#{date}' then '#{date - 1.month}'"
+      end
+
+      "case #{case_when.join(' ')} end"
     end
   end
 end
