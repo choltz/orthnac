@@ -26,11 +26,15 @@ class Transaction < ActiveRecord::Base
   class << self
     # Public: Get a list of categories and codes sorted by those containing
     # the highest transactional amount
-    def categories
-      Transaction.select('category, sum(amount) as sum')
-                 .group('category')
-                 .order('sum desc')
-                 .map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
+    def categories(*category_names)
+      categories = Transaction.select('category, sum(amount) as sum')
+                              .group('category')
+                              .order('sum desc')
+      if category_names.present?
+        categories = categories.where("category in (?)", category_names)
+      end
+
+      categories.map{ |t| [t.category, t.category.gsub(/\W+/, '_').downcase] }
     end
 
     # Public: Get an array of category codes
@@ -55,8 +59,8 @@ class Transaction < ActiveRecord::Base
     #         include monthly sums by every category
     #
     # Returns: Array of aggregated amounts
-    def sums_by_month
-      end_date   = Setting.next_statement_billing_date # Date.today.beginning_of_month + Setting.statement_start_day - 1
+    def sums_by_month(*category_names)
+      end_date   = Setting.next_statement_billing_date
       start_date = end_date - 1.year
       case_when  = sql_billing_cycle_case(start_date, end_date)
 
@@ -64,7 +68,7 @@ class Transaction < ActiveRecord::Base
       query = select("#{case_when} as month, sum(transactions.amount) as sum")
 
       # Compute the sum for every category
-      categories.each.with_index do |(category_name, category), index|
+      categories(*category_names).each.with_index do |(category_name, category), index|
         query = query.select("sum(c#{index}.amount) as #{category}_sum")
         query = query.joins("left join transactions c#{index} on c#{index}.id = transactions.id and c#{index}.category = '#{category_name}'")
       end

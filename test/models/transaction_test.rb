@@ -29,6 +29,28 @@ class TransactionTest < ActiveSupport::TestCase
     should 'sum the amount spent since the beginning of the month' do
       assert_equal 20, Transaction.monthly_sum_to_date.to_i
     end
+
+    should 'return sums grouped by month and category' do
+      sums = Transaction.sums_by_month
+
+      assert_equal 1, sums.length
+      assert_equal '2016-03-01', sums.first.month
+      assert_equal 20,           sums.first.sum
+      assert_equal 20,           sums.first.home_household_sum
+      assert_equal 10,           sums.first.automotive_sum
+      assert_equal -10,          sums.first.entertainment_sum
+    end
+
+    should 'return sums grouped by month for specific categories' do
+      sums = Transaction.sums_by_month('Entertainment', 'Automotive')
+
+      assert_equal 5, sums.first.attributes.length
+      assert_equal 1, sums.length
+      assert_equal '2016-03-01', sums.first.month
+      assert_equal 20,           sums.first.sum
+      assert_equal -10,          sums.first.entertainment_sum
+      assert_equal 10,           sums.first.automotive_sum
+    end
   end
 
   context 'categories' do

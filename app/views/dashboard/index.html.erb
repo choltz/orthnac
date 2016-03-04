@@ -1,25 +1,11 @@
 <div class="dashboard-page">
   <div class="row">
 
-    <div class="col s3">
-      <div class="card center-align">
-        <div class="card-content">
-          <span class="card-title">Spent this month</span>
-
-          <h5 class="monthly-sum-to-date">
-            <%= number_to_currency(Transaction.monthly_sum_to_date) %>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s9">
+    <div class="col s12">
       <div class="card">
         <div class="card-content">
           <span class="card-title">Spending totals by month</span>
-
           <div class="amount-sums-by-month">
-
             <table class="dashboard-sums-table bordered striped responsive-table">
               <thead>
                 <tr>
@@ -43,7 +29,6 @@
                 <% end %>
               </tbody>
             </table>
-
           </div>
           <div class="amount-sums-by-month-for-tests">
             Test data here - hidden, for tests only
