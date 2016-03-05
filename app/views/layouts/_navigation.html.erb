@@ -1,13 +1,16 @@
-<nav>
-  <div class="container">
-    <a href="#" class="brand-logo">Transaction Analysis</a>
+<input type="search" placeholder="Search transactions"/>
 
-    <ul class="hide-on-med-and-down nav-items">
-      <%= render 'layouts/nav_links', context: 'desktop' %>
-    </ul>
-    <ul id="slide-out" class="side-nav">
-      <%= render 'layouts/nav_links', context: 'mobile' %>
-    </ul>
+<nav>
+  <a href="#" class="brand-logo">Orthnac</a>
+  <div class="container">
     <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
   </div>
+</nav>
+<nav class="sub-nav center">
+  <ul class="hide-on-med-and-down nav-items">
+    <%= render 'layouts/nav_links', context: 'desktop' %>
+  </ul>
+  <ul id="slide-out" class="side-nav">
+    <%= render 'layouts/nav_links', context: 'mobile' %>
+  </ul>
 </nav>

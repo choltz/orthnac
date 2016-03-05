@@ -1,5 +1,5 @@
 @import "materialize/components/color";
-$primary-color: color("teal", "darken-3") !default;
+$primary-color: color("teal", "darken-1") !default;
 @import 'materialize';
 @import 'dashboard';
 @import 'import';
@@ -23,25 +23,61 @@ body {
   left:     -10000px;
 }
 
+input[type="search"] {
+  position: absolute;
+  padding: 0 10px 0 10px;
+
+  top: 15px;
+  left: 0px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 1000px;
+  height: 30px;
+  box-shadow: 0px 1px 1.5px rgba(0,0,0,0.20),0px 1px 1px rgba(0,0,0,0.12);
+
+  background-color: rgba(255,255,255,0.25);
+  border: none;
+}
+
 nav {
-  height: 200px;
+  height: 55px;
 
   .brand-logo {
-    padding-top: 65px;
-  }
-
-  li.selected {
-    border-bottom: solid 5px #aaa;
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+    padding-left: 20px;
+    //padding-top: 65px;
   }
 
   .nav-items {
-    padding-top: 131px;
+    display: inline-table;
+  }
+
+  li {
+    font-weight: 300;
+  }
+
+  li:hover a {
+    background-color: transparent;
+  }
+
+  li.selected {
+    font-weight: 500;
   }
 }
 
+nav.sub-nav {
+  height: 55px;
+
+  @extend .teal, .darken-3
+
+}
 
 h2 {
-  @extend .green-text, .text-darken-4;
+  @extend .green-text, .text-darken-2;
 }
 
 main {
