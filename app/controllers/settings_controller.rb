@@ -11,7 +11,7 @@ class SettingsController < ApplicationController
   def update
     @setting = Setting.find_by_id(params[:id])
 
-    if @setting.update_attributes(params[:setting].permit(:statement_start_day))
+    if @setting.update_attributes(params[:setting].permit(:statement_start_day, :primary_categories))
       flash[:message] = 'Settings updated'
       redirect_to edit_settings_path
     else

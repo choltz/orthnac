@@ -17,6 +17,13 @@ class Setting < ActiveRecord::Base
       date
     end
 
+    # Public: Get the primary categories
+    #
+    # Returns: array
+    def primary_categories
+      instance.primary_categories.try(:split, /\W*,\W*/) || []
+    end
+
     # Public: Get the stored statement start day.
     #
     # Returns: Integer

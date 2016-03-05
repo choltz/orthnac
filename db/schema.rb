@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228135917) do
+ActiveRecord::Schema.define(version: 20160304235553) do
 
   create_table "imports", force: :cascade do |t|
     t.text     "filename"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20160228135917) do
 
   create_table "settings", force: :cascade do |t|
     t.integer "statement_start_day", default: 1, null: false
+    t.text    "primary_categories"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -41,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160228135917) do
     t.integer  "import_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "category_raw"
   end
 
   add_index "transactions", ["account_number"], name: "index_transactions_on_account_number"

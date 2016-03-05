@@ -8,6 +8,13 @@ Scenario: Update statement date
   Then the message "Settings updated" should be displayed
 
 @javascript
+Scenario: Primary categories
+  Given I navigate to the "settings" page
+  And I fill in "Primary categories" with "category1, category2"
+  And I click on the "Save" Link
+  Then the message "Settings updated" should be displayed
+
+@javascript
 Scenario: Update statement blank date
   Given I navigate to the "settings" page
   And I fill in "Billing statement start day" with ""
