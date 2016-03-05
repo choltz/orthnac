@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160304235553) do
+ActiveRecord::Schema.define(version: 20160305002720) do
 
   create_table "imports", force: :cascade do |t|
     t.text     "filename"
