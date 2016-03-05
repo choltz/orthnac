@@ -10,6 +10,7 @@ gem 'sass-rails'
 gem 'sqlite3'
 gem 'turbolinks'
 gem 'uglifier'
+gem 'kaminari'
 
 group :development, :test do
   gem 'awesome_print'
