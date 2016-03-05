@@ -8,19 +8,21 @@
           <table class="transaction-table bordered striped">
             <thead>
               <tr>
+                <th class="center-align">Import Id</th>
                 <th>Transaction date</th>
                 <th>Merchant</th>
                 <th>Category</th>
-                <th>Amount</th>
+                <th class="right-align">Amount</th>
               </tr>
             </thead>
             <tbody>
               <% @transactions.each do |transaction| %>
                 <tr>
+                  <td class="center-align"><%= transaction.import_id %></td>
                   <td><%= transaction.transaction_at.strftime('%a, %m/%d/%Y') %></td>
                   <td><%= transaction.merchant_name %></td>
                   <td><%= transaction.category %></td>
-                  <td><%= format_amount(transaction.amount) %></td>
+                  <td class="right-align"><%= format_amount(transaction.amount) %></td>
                 </tr>
               <% end %>
             </tbody>
