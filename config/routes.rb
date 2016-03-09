@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get  'settings'             => 'settings#edit',      as: 'edit_settings'
   put  'settings/:id'         => 'settings#update',    as: 'update_settings'
   get  'settings/cancel'      => 'settings#cancel',    as: 'cancel_settings'
+  get  'search'               => 'transactions#index', as: 'search'
 end

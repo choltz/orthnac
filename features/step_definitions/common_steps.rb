@@ -33,6 +33,10 @@ Then(/^the warning "([^"]*)" should be displayed$/) do |text|
   assert_equal text, element.text
 end
 
+Given(/^I press the "([^"]*)" button$/) do |button|
+  click_button button
+end
+
 # Public: return the current relative path
 def current_path
   URI.parse(current_url).path

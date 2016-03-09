@@ -22,6 +22,13 @@ class Transaction < ActiveRecord::Base
       .between(*Setting.current_statement_dates)
   }
 
+  scope :search, ->(query) {
+    like_query = "%#{query}%"
+    where("category like ?
+           or merchant_name like ?
+           or amount = ?", like_query, like_query, query)
+  }
+
   # Class Methods
   class << self
     # Public: Get a list of categories and codes sorted by those containing

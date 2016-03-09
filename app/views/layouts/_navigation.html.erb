@@ -1,4 +1,7 @@
-<input type="search" placeholder="Search transactions"/>
+<%= form_tag search_path, method: :get do |form| %>
+  <%= search_field_tag :search, '', placeholder: 'search transactions' %>
+  <button id="search_transactions_button" type="submit">Search</button>
+<% end %>
 
 <nav>
   <a href="#" class="brand-logo">Orthnac</a>

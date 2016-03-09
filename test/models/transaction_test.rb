@@ -14,10 +14,10 @@ class TransactionTest < ActiveSupport::TestCase
   setup do
     date = Date.today.beginning_of_month
 
-    create_transaction 'Purchase',       10.00,   date + 1, '1a', 'Automotive'
-    create_transaction 'Purchase',       20.00,   date + 2, '2b', 'Home & Household'
-    create_transaction 'Payment',        -10.00,  date + 3, '3c', 'Medical'
-    create_transaction 'Credit Voucher', -10.00,  date + 4, '4d', 'Entertainment'
+    create_transaction 'Purchase',       10.00,   date + 1, '1a', 'Automotive',       'amazon'
+    create_transaction 'Purchase',       20.00,   date + 2, '2b', 'Home & Household', 'local grocer'
+    create_transaction 'Payment',        -10.00,  date + 3, '3c', 'Medical',          'dentist, inc.'
+    create_transaction 'Credit Voucher', -10.00,  date + 4, '4d', 'Entertainment',    'the movie place'
   end
 
   context 'montly transactions' do
@@ -72,14 +72,45 @@ class TransactionTest < ActiveSupport::TestCase
     end
   end
 
+  context 'search' do
+    should 'search for transactions by category' do
+      assert_equal 1, Transaction.search('Medical').count
+    end
+
+    should 'search for transactions by case insensitive category' do
+      assert_equal 1, Transaction.search('medical').count
+    end
+
+    should 'partial match search for transactions by category' do
+      assert_equal 1, Transaction.search('medi').count
+    end
+
+    should 'search for transactions by merchant' do
+      assert_equal 1, Transaction.search('Amazon').count
+    end
+
+    should 'search for transactions by case insensitive merchant' do
+      assert_equal 1, Transaction.search('amazon').count
+    end
+
+    should 'partial match search for transactions by merchant' do
+      assert_equal 1, Transaction.search('amaz').count
+    end
+
+    should 'search for transactions by amount' do
+      assert_equal 1, Transaction.search('20.00').count
+    end
+  end
+
   private
 
   # Internal: create a transaction with a default account name
-  def create_transaction(type, amount, date, reference, category)
+  def create_transaction(type, amount, date, reference, category, merchant)
     Transaction.create! account_number:   'test account',
                         amount:           amount,
                         category:         category,
                         import_id:        1,
+                        merchant_name:    merchant,
                         reference:        reference,
                         transaction_type: type,
                         transaction_at:   date
