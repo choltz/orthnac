@@ -1,6 +1,7 @@
 <table class="import-table bordered striped responsive-table">
   <thead>
     <tr>
+      <th class="center-align">Import Id</th>
       <th>File</th>
       <th>Import Date</th>
       <th class="import-table-download">Download</th>
@@ -9,6 +10,7 @@
   <tbody>
     <% imports.each do |import| %>
       <tr>
+        <td class="center-align"><%= import.id %></td>
         <td><%= import.filename %></td>
         <td><%= import.created_at.strftime('%m/%d/%Y') %></td>
         <td class="import-table-download">
