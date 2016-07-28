@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require materialize-sprockets
+//= require file
 //= require import
 //= require settings
 //= require all_pages

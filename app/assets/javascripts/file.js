@@ -1,8 +1,7 @@
 var app  = app || {};
-app.Page = app.Page || {};
 
 // Public: client-side code for the imports page
-app.Page.Import = function() {
+app.File = function() {
   var fileInput  = $('.file-input');
   var fileButton = $('.file-upload-button');
 

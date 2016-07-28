@@ -2,6 +2,7 @@
 $primary-color: color("teal", "darken-1") !default;
 @import 'materialize';
 @import 'dashboard';
+@import 'file';
 @import 'import';
 @import 'transaction';
 

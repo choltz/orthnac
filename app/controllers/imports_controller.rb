@@ -17,6 +17,6 @@ class ImportsController < ApplicationController
 
   def upload
     Services::ImportFile.new.call params[:import_file]
-    redirect_to import_path
+    redirect_to request.env['HTTP_REFERER']
   end
 end

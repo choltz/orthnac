@@ -1,23 +1,20 @@
 <div class="import-page">
-  <%= form_for :import, url: upload_path, html: { multipart: true } do %>
-    <div class="row">
-      <div class="col s11 offset-s10">
-        <%= file_input_tag id: 'import_file' %>
-        <%= submit_tag 'Import' %>
-      </div>
-      <div class="col s12">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Import History</span>
+  <div class="row">
+    <div class="col s11 offset-s10">
+      <%= render 'file/upload' %>
+    </div>
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Import History</span>
 
-            <%= render 'import_table', imports: @imports %>
-          </div>
+          <%= render 'import_table', imports: @imports %>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>
 
 <% deferred_javascript do %>
-  app.Page.Import();
+  app.File();
 <% end %>
