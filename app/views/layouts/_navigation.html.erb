@@ -1,19 +1,30 @@
-<%= form_tag search_path, method: :get do |form| %>
-  <%= search_field_tag :search, params[:search], placeholder: 'search transactions' %>
-  <button id="search_transactions_button" type="submit">Search</button>
-<% end %>
-
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href="#!">Account 1</a></li>
+  <li><a href="#!">Account 2</a></li>
+  <li class="divider"></li>
+  <li><a href="#!">All Accounts</a></li>
+</ul>
 <nav>
-  <a href="#" class="brand-logo">Orthnac</a>
-  <div class="container">
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">Orthnac</a>
+
+    <%= form_tag search_path, method: :get do |form| %>
+      <div class="search-wrapper">
+        <%= search_field_tag :search, params[:search], placeholder: 'search transactions' %>
+        <button id="search_transactions_button" type="submit">Search</button>
+      </div>
+    <% end %>
+
+    <ul class="right hide-on-med-and-down">
+
+      <% %w{ dashboard imports transactions settings}.each do |link| %>
+        <li class="<%= controller_name == link ? 'selected' : '' %>">
+          <%= link_to link.capitalize, "/#{link}", id: "#{link}-desktop" %>
+        </li>
+      <% end %>
+
+      <!-- Dropdown Trigger -->
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Account<i class="material-icons right">arrow_drop_down</i></a></li>
+    </ul>
   </div>
-</nav>
-<nav class="sub-nav center">
-  <ul class="hide-on-med-and-down nav-items">
-    <%= render 'layouts/nav_links', context: 'desktop' %>
-  </ul>
-  <ul id="slide-out" class="side-nav">
-    <%= render 'layouts/nav_links', context: 'mobile' %>
-  </ul>
 </nav>
