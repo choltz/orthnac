@@ -10,7 +10,6 @@ gem 'quiet_assets'
 gem 'rails', '4.2.5.1'
 gem 'sass-rails'
 gem 'sqlite3'
-gem 'turbolinks'
 gem 'uglifier'
 
 group :development, :test do
