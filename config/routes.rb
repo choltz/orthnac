@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
 
   get  'dashboard'            => 'dashboard#index',    as: 'dashboard'
+  get  'dashboard/:account'   => 'dashboard#index',    as: 'dashboard_account'
   get  'imports'              => 'imports#index',      as: 'import'
   post 'upload'               => 'imports#upload',     as: 'upload'
   get  'imports/download/:id' => 'imports#download',   as: 'import_download'
