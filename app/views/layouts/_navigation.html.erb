@@ -1,6 +1,8 @@
-<ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!">Account 1</a></li>
-  <li><a href="#!">Account 2</a></li>
+<ul id="account-dropdown" class="account-dropdown dropdown-content">
+  <% Account.all.each do |account| %>
+    <li><a href="#!"><%= account.name %></a></li>
+  <% end %>
+
   <li class="divider"></li>
   <li><a href="#!">All Accounts</a></li>
 </ul>
@@ -23,7 +25,7 @@
       <% end %>
 
       <!-- Dropdown Trigger -->
-      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Account<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a class="dropdown-button" href="#!" data-activates="account-dropdown">Account<i class="material-icons right">arrow_drop_down</i></a></li>
     </ul>
   </div>
 </nav>
