@@ -8,15 +8,14 @@
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo">Orthnac</a>
 
-    <%= form_tag search_path, method: :get do |form| %>
-      <div class="search-wrapper">
+    <div class="search-wrapper">
+      <%= form_tag search_path, method: :get do |form| %>
         <%= search_field_tag :search, params[:search], placeholder: 'search transactions' %>
-        <button id="search_transactions_button" type="submit">Search</button>
-      </div>
-    <% end %>
+       <button id="search_transactions_button" type="submit">Search</button>
+      <% end %>
+    </div>
 
-    <ul class="right hide-on-med-and-down">
-
+    <ul class="navigation-menu right hide-on-med-and-down">
       <% %w{ dashboard imports transactions settings}.each do |link| %>
         <li class="<%= controller_name == link ? 'selected' : '' %>">
           <%= link_to link.capitalize, "/#{link}", id: "#{link}-desktop" %>
