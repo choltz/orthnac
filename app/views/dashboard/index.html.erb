@@ -13,9 +13,9 @@
               <thead>
                 <tr>
                   <th class="amount-sums-by-month-cell"> Date</th>
-                  <th class="amount-sums-by-month-cell center-align">Sum</th>
+                  <th class="amount-sums-by-month-cell right-align">Sum</th>
                   <% Setting.primary_categories.each do |name| %>
-                    <th class="amount-sums-by-month-cell center-align"><%= name %></td>
+                    <th class="amount-sums-by-month-cell right-align"><%= name %></td>
                   <% end %>
                 </tr>
               </thead>
@@ -23,10 +23,10 @@
                 <% Transaction.sums_by_month(*Setting.primary_categories).each do |item| %>
                   <tr>
                     <td class="amount-sums-by-month-cell"><%= item.month %></td>
-                    <td class="amount-sums-by-month-cell center-align"><%= number_to_currency(item.sum) %></td>
+                    <td class="amount-sums-by-month-cell right-align"><%= number_to_currency(item.sum) %></td>
 
                     <% Setting.primary_categories.each do |category| %>
-                      <td class="amount-sums-by-month-cell center-align"><%= number_to_currency(item.send("#{category}_sum")) %></td>
+                      <td class="amount-sums-by-month-cell right-align"><%= number_to_currency(item.send("#{category}_sum")) %></td>
                     <% end %>
                   </tr>
                 <% end %>
