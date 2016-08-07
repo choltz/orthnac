@@ -1,12 +1,12 @@
 <!-- Dropdown Trigger -->
 <a class="dropdown-button" href="#!" data-activates="account-dropdown">
-  <%= Account.find_by(code: account).try(:name) || 'All Accounts' %>
+  <%= current_account.name || 'All Accounts' %>
   <i class="material-icons right">arrow_drop_down</i>
 </a>
 <ul id="account-dropdown" class="account-dropdown dropdown-content">
-  <li><%= link_to 'All Accounts', dashboard_path %></a></li>
+  <li><%= link_to 'All Accounts', select_account_path('all') %></a></li>
   <li class="divider"></li>
   <% Account.all.each do |account| %>
-    <li><%= link_to account.name, dashboard_account_path(account.code) %></li>
+    <li><%= link_to account.name, select_account_path(account.code) %></li>
   <% end %>
 </ul>

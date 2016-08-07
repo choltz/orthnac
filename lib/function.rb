@@ -6,7 +6,7 @@ class Function < Proc
   end
 
   # Public: override pipe operator to compose functions
-  def | (function)
+  def >> (function)
     self.class.compose(self, function)
   end
 
