@@ -19,7 +19,11 @@ class Function < Proc
   def self.compose(*functions)
     self.new do |*args|
       functions.reduce(args) do |result, function|
-        function.call(*result)
+        if result.is_a?(Array)
+          function.call(*result)
+        else
+          function.call(result)
+        end
       end
     end
   end

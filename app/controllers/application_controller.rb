@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   # session, then find by parameter. If neither of those yield a result, then
   # return a stub account that represents the default behavior
   def current_account
-    # Account.current_account(session, params[:account])
-    Functions::Accounts.get(session, params[:account]).call
+    Functions::Accounts.get.call(session, params[:account])
   end
 end
