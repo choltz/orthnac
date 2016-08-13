@@ -27,4 +27,25 @@ class Function < Proc
       end
     end
   end
+
+  # Public: given a function, curry it into a function that returns a function
+  # https://en.wikipedia.org/wiki/Currying
+  #
+  # function: function to curry
+  #
+  # Notes: ruby alreay provides a curry function, but it returns procs. This
+  # curry function returns Function objects.
+  #
+  # Returns a function
+  def self.curry(function)
+    curried = -> (*args) {
+      if args.length >= function.parameters.length
+        function.(*args)
+      else
+        Function.new do |a|
+          curried.(*(args + [a]))
+        end
+      end
+    }
+  end
 end
