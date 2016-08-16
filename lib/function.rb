@@ -28,7 +28,8 @@ class Function < Proc
     end
   end
 
-  # Public: given a function, curry it into a function that returns a function
+  # Public: curry the current function with multiple parameters into a sequence
+  # of functions, each with a single parameter.
   # https://en.wikipedia.org/wiki/Currying
   #
   # function: function to curry
@@ -37,13 +38,13 @@ class Function < Proc
   # curry function returns Function objects.
   #
   # Returns a function
-  def self.curry(function)
+  def curry
     curried = -> (*args) {
-      if args.length >= function.parameters.length
-        function.(*args)
+      if args.length >= parameters.length
+        call(*args)
       else
         Function.new do |a|
-          curried.(*(args + [a]))
+          curried.call(*(args + [a]))
         end
       end
     }
