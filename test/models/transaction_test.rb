@@ -34,7 +34,7 @@ class TransactionTest < ActiveSupport::TestCase
       sums = Transaction.sums_by_month
 
       assert_equal 1, sums.length
-      assert_equal '2016-03-01', sums.first.month
+      assert_equal '2016-09-01', sums.first.month
       assert_equal 20,           sums.first.sum
       assert_equal 20,           sums.first.home_household_sum
       assert_equal 10,           sums.first.automotive_sum
@@ -46,7 +46,7 @@ class TransactionTest < ActiveSupport::TestCase
 
       assert_equal 5, sums.first.attributes.length
       assert_equal 1, sums.length
-      assert_equal '2016-03-01', sums.first.month
+      assert_equal '2016-09-01', sums.first.month
       assert_equal 20,           sums.first.sum
       assert_equal -10,          sums.first.entertainment_sum
       assert_equal 10,           sums.first.automotive_sum
@@ -99,6 +99,27 @@ class TransactionTest < ActiveSupport::TestCase
 
     should 'search for transactions by amount' do
       assert_equal 1, Transaction.search('20.00').count
+    end
+  end
+
+  context 'cumulative_spending_by_month' do
+    setup do
+      Transaction.destroy_all
+
+      date = Date.today
+      create_transaction 'Purchase', 10.00, date - 6, '3a',  'Automotive',       'amazon'
+      create_transaction 'Purchase', 20.00, date - 6, '4b',  'Home & Household', 'local grocer'
+      create_transaction 'Purchase', 10.00, date - 10, '5a', 'Automotive',       'amazon'
+      create_transaction 'Purchase', 20.00, date - 10, '6b', 'Home & Household', 'local grocer'
+      create_transaction 'Purchase', 10.00, date - 12, '7a',  'Automotive',       'amazon'
+      create_transaction 'Purchase', 20.00, date - 14, '7b',  'Home & Household', 'local grocer'
+      create_transaction 'Purchase', 10.00, date - 15, '8a', 'Automotive',       'amazon'
+      create_transaction 'Purchase', 20.00, date - 16, '8b', 'Home & Household', 'local grocer'
+    end
+
+    should 'show accumulated spending' do
+      expected = [[8, 20], [9, 30], [10, 50], [12, 60], [14, 70], [14, 90], [18, 100], [18, 120]]
+      assert_equal expected, Transaction.cumulative_spending_by_month(Time.now - 1.month, Time.now + 1.month)
     end
   end
 

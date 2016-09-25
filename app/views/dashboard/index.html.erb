@@ -1,5 +1,18 @@
 <div class="dashboard-page">
   <div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title">Spending rate</div>
+          <%= Transaction.cumulative_spending_by_month(Time.now).each do |item| %>
+            <%= item %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col s11 offset-s10">
       <%= render 'file/upload' %>
     </div>
