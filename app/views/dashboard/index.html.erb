@@ -4,9 +4,7 @@
       <div class="card">
         <div class="card-content">
           <div class="card-title">Spending rate</div>
-          <%= Transaction.cumulative_spending_by_month(Time.now).each do |item| %>
-            <%= item %>
-          <% end %>
+          <div id="chart_div"></div>
         </div>
       </div>
     </div>
@@ -61,3 +59,24 @@
 <% deferred_javascript do %>
   app.File();
 <% end %>
+
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+
+  data = <%= Transaction.cumulative_spending_by_month(Setting.next_statement_billing_date - 1.months, Setting.next_statement_billing_date).to_s.html_safe %>;
+  data.unshift(['day', 'spent', 'total']);
+  data = google.visualization.arrayToDataTable(data);
+
+  var options = {
+  title: 'Company Performance',
+  hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+  vAxis: {minValue: 0}
+  };
+
+  var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+  }
+</script>

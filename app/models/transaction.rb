@@ -15,13 +15,18 @@ class Transaction < ActiveRecord::Base
     where('transactions.transaction_at between ? and ?', start_date, end_date)
   }
 
+  # Return cumulative spending over a date range
   scope :cumulative_spending_by_month, ->(start_date, end_date) {
-    between(start_date, end_date)
-      .order(:transaction_at)
-      .reduce([]) { |array, transaction|
-        array << [transaction.transaction_at.day, transaction.amount.to_i]
-      }
-      #.map{|t| [t.transaction_at.day, t.amount.to_i]}
+   between(start_date, end_date)
+     .where("transaction_type <> 'Payment'")
+     .order(:transaction_at)
+     .reduce([]) { |array, transaction|
+       # build an array of days, amounts, and cumulative amounts
+
+     array << [transaction.transaction_at.month.to_s.rjust(2, '0') + transaction.transaction_at.day.to_s.rjust(2, '0'),
+                 transaction.amount.to_i + (array.length == 0 ? 0 : array.last[1]),
+                 transaction.amount.to_i]
+     }
   }
 
   # Return all transactions, except for payments, since he beginning of the

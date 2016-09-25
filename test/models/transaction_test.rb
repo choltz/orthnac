@@ -118,7 +118,7 @@ class TransactionTest < ActiveSupport::TestCase
     end
 
     should 'show accumulated spending' do
-      expected = [[8, 20], [9, 30], [10, 50], [12, 60], [14, 70], [14, 90], [18, 100], [18, 120]]
+      expected = [[9, 20, 20], [10, 10, 30], [11, 20, 50], [13, 10, 60], [15, 10, 70], [15, 20, 90], [19, 10, 100], [19, 20, 120]]
       assert_equal expected, Transaction.cumulative_spending_by_month(Time.now - 1.month, Time.now + 1.month)
     end
   end
