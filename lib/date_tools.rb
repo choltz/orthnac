@@ -12,5 +12,9 @@ class DateTools
       (start_date..end_date).select{ |date| date.day == day }
                             .map(&block)
     end
+
+    def month_and_day(date)
+      date.month.to_s.rjust(2, '0') + date.day.to_s.rjust(2,'0')
+    end
   end
 end
