@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-content">
           <div class="card-title">Spending rate</div>
-          <%= Transaction.cumulative_spending_by_month(Setting.next_statement_billing_date - 1.months, Setting.next_statement_billing_date) %>
+          <%# Transaction.cumulative_spending_by_month(Setting.next_statement_billing_date - 1.months, Setting.next_statement_billing_date) %>
           <div id="chart_div"></div>
         </div>
       </div>
