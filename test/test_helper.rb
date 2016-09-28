@@ -14,6 +14,21 @@ module ActiveSupport
     fixtures :all
 
     # Add more helper methods to be used by all tests here...
+
+    private
+
+    # Internal: create a transaction with a default account name
+    def create_transaction(type, amount, date, reference, category, merchant)
+      Transaction.create! account_number:   'test account',
+                          amount:           amount,
+                          category:         category,
+                          import_id:        1,
+                          merchant_name:    merchant,
+                          reference:        reference,
+                          transaction_type: type,
+                          transaction_at:   date
+
+    end
   end
 end
 

@@ -54,26 +54,6 @@ class Transaction < ActiveRecord::Base
       categories.map(&:first)
     end
 
-    # Return cumulative spending over a date range
-   def cumulative_spending_by_month(start_date, end_date)
-      # create empty data set: {}'0901' => [0,0], '0902' => [0,0], '0903' => [0,0], ...}
-      data = (start_date.to_date..end_date.to_date).reduce({}){ |hash, d| hash.merge(DateTools.month_and_day(d) => [0, 0, 3500])}
-
-      # populate data set with transaction amounts per day: {'0901' => [0,100], '0902' => [0,30], '0903' => [0,10], ...}
-      between(start_date, end_date).where("transaction_type <> 'Payment'").each do |transaction|
-        data[DateTools.month_and_day(transaction.transaction_at)][1] += transaction.amount.to_i
-      end
-
-      # convert the hash into an array: [['0901',0,100], ['0902',0,30], ['0903',0,10], ...]
-      data = data.map{ |n| n.flatten }
-
-      # populate data set with accumulated amounts: [['0901',100,100], ['0902',130,30], ['0903',140,10], ...]
-      data.reduce([]){ |array, item| array << [item[0],
-                                               item[2].to_i + (array.length == 0 ? 0 : array.last[1]),
-                                               item[2],
-                                               item[3]] }
-   end
-
     # Public: Return the amount of expenditures that have occurred since the
     # first of the month
     #
