@@ -4,7 +4,6 @@ module ApplicationHelper
     content_for(:deferred_javascript) { capture(&block) }
   end
 
-
   # Public: Wrapper for consistent file input widget
   #
   # button_text - text to display in the file selection button

@@ -108,3 +108,21 @@ main {
 .navigation-menu {
   margin-top: -5px;
 }
+
+.account-dropdown {
+  white-space: nowrap;
+  overflow: none;
+  width: 150px !important;
+}
+
+
+::-webkit-input-placeholder { /* Chrome */
+  color: white;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+  opacity: 1;
+}

@@ -6,7 +6,7 @@ class Function < Proc
   end
 
   # Public: override pipe operator to compose functions
-  def | (function)
+  def >> (function)
     self.class.compose(self, function)
   end
 
@@ -19,8 +19,34 @@ class Function < Proc
   def self.compose(*functions)
     self.new do |*args|
       functions.reduce(args) do |result, function|
-        function.call(*result)
+        if result.is_a?(Array)
+          function.call(*result)
+        else
+          function.call(result)
+        end
       end
     end
+  end
+
+  # Public: curry the current function with multiple parameters into a sequence
+  # of functions, each with a single parameter.
+  # https://en.wikipedia.org/wiki/Currying
+  #
+  # function: function to curry
+  #
+  # Notes: ruby alreay provides a curry function, but it returns procs. This
+  # curry function returns Function objects.
+  #
+  # Returns a function
+  def curry
+    curried = -> (*args) {
+      if args.length >= parameters.length
+        call(*args)
+      else
+        Function.new do |a|
+          curried.call(*(args + [a]))
+        end
+      end
+    }
   end
 end
