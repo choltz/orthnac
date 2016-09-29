@@ -67,8 +67,8 @@
 
   function drawChart() {
 
-  data = <%= Functions::Transactions.cumulative_spending_by_month(Setting.next_statement_billing_date - 1.months, Setting.next_statement_billing_date).call.to_s.html_safe %>;
-  //data = <%= Functions::Transactions.cumulative_spending_by_month(Setting.next_statement_billing_date - 2.months, Setting.next_statement_billing_date - 1.months).call.to_s.html_safe %>;
+  data = <%= Functions::Transactions.cumulative_spending_by_month.call(Setting.next_statement_billing_date - 1.months, Setting.next_statement_billing_date).to_s.html_safe %>;
+  //data = <%= Functions::Transactions.cumulative_spending_by_month.call(Setting.next_statement_billing_date - 2.months, Setting.next_statement_billing_date - 1.months).to_s.html_safe %>;
   data.unshift(['day', 'spent', 'total', 'max']);
   data = google.visualization.arrayToDataTable(data);
 

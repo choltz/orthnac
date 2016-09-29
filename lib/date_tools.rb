@@ -13,8 +13,8 @@ class DateTools
                             .map(&block)
     end
 
-    def month_and_day(date)
-      date.month.to_s.rjust(2, '0') + date.day.to_s.rjust(2,'0')
+    def date_string(date)
+      "#{date.year}/#{date.month.to_s.rjust(2, '0')}/#{date.day.to_s.rjust(2,'0')}"
     end
   end
 end
