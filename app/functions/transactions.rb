@@ -6,6 +6,7 @@ module Functions
     compose :cumulative_spending_by_month, ->{
       Functions::DateTools.date_to_billing_period >>
       empty_cumulative_set                        >>
+      add_projected_spending                      >>
       get_daily_totals                            >>
       get_cumulative_totals
     }
@@ -15,7 +16,20 @@ module Functions
       def empty_cumulative_set
         Function.new do |range|
           range.reduce({}) do |hash, date|
-            hash.merge(::DateTools.date_string(date) => [0, 0, MAX_SPENDING])
+            hash.merge(::DateTools.date_string(date) => [0, 0, MAX_SPENDING, 0])
+          end
+        end
+      end
+
+      def add_projected_spending
+        Function.new do |data|
+          amount = MAX_SPENDING / data.keys.length
+
+          data.each.with_index.reduce({}) do |hash, (key_value, index)|
+            date   = key_value.first
+            values = key_value.last
+            values.push amount * (index + 1)
+            hash.merge date => values
           end
         end
       end
@@ -40,7 +54,8 @@ module Functions
               .reduce([]){ |array, item| array << [item[0],
                                                    item[2].to_i + (array.length == 0 ? 0 : array.last[1]),
                                                    item[2],
-                                                   item[3]] }
+                                                   item[3],
+                                                   item[5]] }
         end
       end
     end
