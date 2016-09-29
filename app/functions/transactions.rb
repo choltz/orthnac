@@ -1,20 +1,21 @@
 module Functions
   class Transactions < FunctionGroup
-    MAX_SPENDING = 3500
+    MAX_SPENDING = 3300
 
     # Return cumulative spending over a date range
-    compose :cumulative_spending_by_month, -> {
-      empty_cumulative_set >>
-      get_daily_totals     >>
+    compose :cumulative_spending_by_month, ->{
+      Functions::DateTools.date_to_billing_period >>
+      empty_cumulative_set                        >>
+      get_daily_totals                            >>
       get_cumulative_totals
     }
 
     class << self
       # create empty data set: { '0901' => [0, 0, 3500], '0902' => [0, 0, 3500], '0903' => [0, 0, 3500], ...}
       def empty_cumulative_set
-        Function.new do |start_date, end_date|
-          (start_date.to_date..end_date.to_date).reduce({}) do |hash, date|
-            hash.merge(DateTools.date_string(date) => [0, 0, MAX_SPENDING])
+        Function.new do |range|
+          range.reduce({}) do |hash, date|
+            hash.merge(::DateTools.date_string(date) => [0, 0, MAX_SPENDING])
           end
         end
       end
@@ -26,7 +27,7 @@ module Functions
           end_date   = Date.parse data.keys.last
 
           Transaction.between(start_date, end_date).where("transaction_type <> 'Payment'").each do |transaction|
-            data[DateTools.date_string(transaction.transaction_at)][1] += transaction.amount.to_i
+            data[::DateTools.date_string(transaction.transaction_at)][1] += transaction.amount.to_i
           end
           data
         end
