@@ -16,5 +16,6 @@
 //= require file
 //= require import
 //= require settings
+//= reqiure dashboard
 //= require all_pages
 //= require_tree .

@@ -59,27 +59,8 @@
 
 <% deferred_javascript do %>
   app.File();
+
+  // TODO: make this async
+  var data = <%= Functions::Transactions.cumulative_spending_by_month.call(Date.today).to_s.html_safe %>
+  new app.Chart.Dashboard().render(data);
 <% end %>
-
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-
-  data = <%= Functions::Transactions.cumulative_spending_by_month.call(Date.today).to_s.html_safe %>;
-  data.unshift(['day', 'spent', 'total', 'max', 'projected']);
-  data = google.visualization.arrayToDataTable(data);
-
-  var options = {
-    hAxis: {title: 'day',  titleTextStyle: {color: '#333'}},
-    vAxis: {minValue: 0},
-    height: 400,
-    series: {2:{color:'#cccccc',lineWidth:2},
-             3:{color:'#aaaaaa',lineWidth:2}}
-  };
-
-  var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
-  }
-</script>
