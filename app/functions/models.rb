@@ -1,16 +1,16 @@
 module Functions
   class Models < FunctionGroup
-    compose :find_openstruct_by, -> { find_by >> to_openstruct }
-    compose :find_attributes_by, -> { find_by >> to_attributes }
+    compose :find_openstruct_by, -> (model, field) { find_by(model, field) >> to_openstruct }
+    compose :find_attributes_by, -> (model, field) { find_by(model, field) >> to_attributes }
 
     # Public: Return a function that finds an account with the given arguments
     #
     # Returns a function
     #   model: symbol of the model to query
     #   args   query arguments
-    def self.find_by
-      Function.new do |model, *args|
-        model.to_s.capitalize.constantize.find_by(*args)
+    def self.find_by(model, field)
+      Function.new do |value|
+        model.to_s.capitalize.constantize.find_by(field.to_s, value)
       end
     end
 

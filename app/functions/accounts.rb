@@ -13,7 +13,7 @@ module Functions
       def get
         Function.new do |session, code|
           hash = session[:account] ||
-                 Functions::Models.find_attributes_by.call(:account, code: code) ||
+                 Functions::Models.find_attributes_by(:account, :code).call(code) ||
                  Account.stub_account
 
           OpenStruct.new hash
