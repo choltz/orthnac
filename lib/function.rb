@@ -17,13 +17,9 @@ class Function < Proc
   #
   # Returns a compositional function
   def self.compose(*functions)
-    self.new do |*args|
+    self.new do |args|
       functions.reduce(args) do |result, function|
-        if result.is_a?(Array)
-          function.call(*result)
-        else
-          function.call(result)
-        end
+        function.call(result)
       end
     end
   end
@@ -45,6 +41,18 @@ class Function < Proc
       else
         Function.new do |a|
           curried.call(*(args + [a]))
+        end
+      end
+    }
+  end
+
+  def curry_right
+    curried = -> (*args) {
+      if args.length >= parameters.length
+        call(*args)
+      else
+        Function.new do |a|
+          curried.call(*([a] + args))
         end
       end
     }
