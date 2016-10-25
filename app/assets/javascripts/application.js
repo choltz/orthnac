@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require materialize-sprockets
+//= require vendor/vue.js
+//= require components/graph
 //= require file
 //= require import
 //= require settings

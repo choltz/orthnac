@@ -26,6 +26,12 @@
     </div>
   </main>
   <script language="javascript">
+    var application = new Vue({
+      el: '.container',
+      data: {
+      }
+    })
+
     <%= yield :deferred_javascript -%>
 
     app.Page.AllPages();
