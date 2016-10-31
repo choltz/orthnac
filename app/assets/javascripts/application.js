@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require materialize-sprockets
 //= require vendor/vue.js
+//= require components/data_dropdown
 //= require components/graph
 //= require file
 //= require import

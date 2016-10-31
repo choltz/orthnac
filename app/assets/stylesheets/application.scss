@@ -5,6 +5,7 @@ $primary-color: color("teal", "darken-1") !default;
 @import 'file';
 @import 'import';
 @import 'transaction';
+@import 'components/data_dropdown';
 
 body {
   background-color: #e5e5e5;
@@ -22,6 +23,18 @@ body {
 .flash {
   position: absolute;
   left:     -10000px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clear {
+  clear: both;
 }
 
 // Don't sow the search submit button. It is present to help with cucubmer tests

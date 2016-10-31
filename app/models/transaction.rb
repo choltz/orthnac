@@ -37,6 +37,7 @@ class Transaction < ActiveRecord::Base
       categories = Transaction.select('category, sum(amount) as sum')
                               .group('category')
                               .order('sum desc')
+
       if category_names.present?
         categories = categories.where("category in (?)", category_names)
       end
