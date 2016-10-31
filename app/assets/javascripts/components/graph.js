@@ -40,9 +40,18 @@ Vue.component('graph', {
     // Retrieve graph data from the server
     getGraphData: function() {
       $.getJSON('api/dashboard/graph', this.beginRender );
+    },
+    updateFilter: function(data) {
+
     }
   },
+  beforeDestroy: function() {
+    application.$off('data-dropdown:select-item', this.updateFilter);
+  },
   mounted: function () {
-    this.$nextTick(this.getGraphData);
+    this.$nextTick(function() {
+      this.getGraphData();
+      application.$on('data-dropdown:select-item', this.updateFilter);
+    });
   }
 });

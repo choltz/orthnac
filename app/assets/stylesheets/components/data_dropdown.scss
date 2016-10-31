@@ -5,3 +5,18 @@
 .data-dropdown-selected {
   border-bottom: solid 1px #aaa;
 }
+
+.data-dropdown-items {
+  position: fixed;
+  background-color: white;
+  border: solid 1px #aaa;
+  z-index: 5000;
+}
+
+.data-dropdown-item {
+  padding: 0 10px 0 10px;
+}
+
+.data-dropdown-item:hover {
+  background-color: #ddd;
+}

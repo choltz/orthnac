@@ -1,7 +1,3 @@
-// Graph component: use google graph APi to display summary spending information
-//
-// id - identifing element used by google graph api to place the rendered
-//      content in the correct container
 Vue.component('data-dropdown', {
   template: '<div class  = "data-dropdown"'
           + '     @click = "visible = !visible">'
@@ -9,12 +5,19 @@ Vue.component('data-dropdown', {
           + '    <span class="data-dropdown-selected">{{defaultText}}</span>'
           + '    <i class = "material-icons">arrow_drop_down</i>'
           + '  </div>'
-          + '  <div v-show="visible" v-for="item in items">'
-          + '    {{item}}'
+          + '  <div class  = "data-dropdown-items"'
+          + '       v-show = "visible">'
+          + '    <div class  = "data-dropdown-item"'
+          + '         v-for  ="item in items"'
+          + '         @click = "selectItem(item)">'
+          + '      {{item}}'
+          + '    </div>'
           + '  </div>'
           + '</div>',
   props: {
-    defaultText: { default: null }
+    defaultText: { default: null },
+    id:          { default: null },
+    url:         { default: ''   }
   },
   data: function() {
     return {
@@ -24,14 +27,16 @@ Vue.component('data-dropdown', {
   },
   methods: {
     getData: function() {
-      $.getJSON('api/transactions/categories', this.loadData );
+      $.getJSON(this.url, this.loadData );
     },
     loadData: function(data) {
       this.items = data.items;
+    },
+    selectItem: function(item) {
+      application.$emit('data-dropdown:select-item', {id: this.id, item: item});
     }
   },
   mounted: function () {
     this.$nextTick(this.getData);
   }
-
 });

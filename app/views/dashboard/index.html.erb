@@ -9,8 +9,10 @@
         <div class="card-content">
           <div class="card-title">
             <div class="left">Spending rate&nbsp;</div>
-            <data-dropdown class="left" default-text="for all categories"
-                           url="api/transactions/categories"></data-dropdown>
+            <data-dropdown id           = "category"
+                           class        = "left dashboard-category-filter"
+                           default-text = "for all categories"
+                           url          = "api/transactions/categories"></data-dropdown>
             <div class="clear"></div>
           </div>
           <graph id="dashboard_chart"></graph>
