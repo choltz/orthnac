@@ -42,7 +42,7 @@ module Functions
           start_date   = Date.parse data.keys.first
           end_date     = Date.parse data.keys.last
           transactions = Transaction.between(start_date, end_date).where("transaction_type <> 'Payment'")
-          transactions = transactions.where(category: category) if category.present?
+          transactions = transactions.where(category: category) if category.present? && category != 'all'
 
           transactions.each do |transaction|
             data[::DateTools.date_string(transaction.transaction_at)][1] += transaction.amount.to_i
