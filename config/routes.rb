@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get  'api/dashboard/graph'         => 'api/dashboard#graph',        as: 'api_dashboard_graph',        defaults: { format: 'json' }
   get  'api/transactions/categories' => 'api/transaction#categories', as: 'api_transaction_categories', defaults: { format: 'json' }
+  get  'api/transactions/months'     => 'api/transaction#months',     as: 'api_transaction_months',     defaults: { format: 'json' }
   get  'dashboard'                   => 'dashboard#index',            as: 'dashboard'
   get  'dashboard/:account'          => 'dashboard#index',            as: 'dashboard_account'
   get  'imports'                     => 'imports#index',              as: 'import'

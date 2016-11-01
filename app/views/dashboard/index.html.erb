@@ -14,6 +14,11 @@
                            default-text = "all categories"
                            url          = "api/transactions/categories"
                            include-all  = "true"></data-dropdown>
+            <div class="left">&nbsp;in&nbsp;&nbsp;</div>
+            <data-dropdown id           = "date"
+                           class        = "left dashboard-category-filter"
+                           default-text = "<%= Date.today.strftime("%B of %Y") %>"
+                           url          = "api/transactions/months"></data-dropdown>
             <div class="clear"></div>
           </div>
           <graph id="dashboard_chart"></graph>

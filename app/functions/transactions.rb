@@ -2,7 +2,23 @@ module Functions
   class Transactions < FunctionGroup
     MAX_SPENDING = 3300
 
+    # Public: Return an array of date/year strings
+    compose :date_array, -> {
+      Functions::Transactions.min_max_transation_dates >>
+      Functions::DateTools.date_object_to_range        >>
+      Functions::DateTools.range_to_month_array        >>
+      Functions::Arrays.reverse                        >>
+      Functions::Util.map{ |date| date.strftime("%B of %Y") }
+    }
+
     class << self
+      # public: Get the min and max transaction date
+      def min_max_transation_dates
+        Function.new do
+          Transaction.select('min(transaction_at) as first_date, max(transaction_at) as last_date')
+        end
+      end
+
       # Return cumulative spending over a date range
       def cumulative_spending_by_month(date, category)
         Function.new do
