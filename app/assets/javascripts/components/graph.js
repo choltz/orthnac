@@ -38,11 +38,19 @@ Vue.component('graph', {
       chart.draw(this.graphData, options);
     },
     // Retrieve graph data from the server
-    getGraphData: function() {
-      $.getJSON('api/dashboard/graph', this.beginRender );
+    getGraphData: function(category) {
+      if (category != undefined) {
+        queryString = '?category=' + category;
+
+      }
+      else {
+        queryString = '';
+      }
+
+      $.getJSON('api/dashboard/graph' + queryString, this.beginRender );
     },
     updateFilter: function(data) {
-
+      this.getGraphData(data.item);
     }
   },
   beforeDestroy: function() {

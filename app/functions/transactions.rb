@@ -2,16 +2,18 @@ module Functions
   class Transactions < FunctionGroup
     MAX_SPENDING = 3300
 
-    # Return cumulative spending over a date range
-    compose :cumulative_spending_by_month, ->{
-      Functions::DateTools.date_to_billing_period >>
-      empty_cumulative_set                        >>
-      add_projected_spending                      >>
-      get_daily_totals                            >>
-      get_cumulative_totals
-    }
-
     class << self
+      # Return cumulative spending over a date range
+      def cumulative_spending_by_month(date, category)
+        Function.new do
+          data = (Functions::DateTools.date_to_billing_period >>
+                  empty_cumulative_set                        >>
+                  add_projected_spending).call(date)
+
+          (get_daily_totals(category) >> get_cumulative_totals).call(data)
+        end
+      end
+
       # create empty data set: { '0901' => [0, 0, 3500], '0902' => [0, 0, 3500], '0903' => [0, 0, 3500], ...}
       def empty_cumulative_set
         Function.new do |range|
@@ -35,12 +37,14 @@ module Functions
       end
 
       # populate data set with transaction amounts per day: {'0901' => [0,100], '0902' => [0,30], '0903' => [0,10], ...}
-      def get_daily_totals
+      def get_daily_totals(category = nil)
         Function.new do |data|
-          start_date = Date.parse data.keys.first
-          end_date   = Date.parse data.keys.last
+          start_date   = Date.parse data.keys.first
+          end_date     = Date.parse data.keys.last
+          transactions = Transaction.between(start_date, end_date).where("transaction_type <> 'Payment'")
+          transactions = transactions.where(category: category) if category.present?
 
-          Transaction.between(start_date, end_date).where("transaction_type <> 'Payment'").each do |transaction|
+          transactions.each do |transaction|
             data[::DateTools.date_string(transaction.transaction_at)][1] += transaction.amount.to_i
           end
           data
