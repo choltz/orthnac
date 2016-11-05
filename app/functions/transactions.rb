@@ -8,7 +8,8 @@ module Functions
       Functions::DateTools.date_object_to_range        >>
       Functions::DateTools.range_to_month_array        >>
       Functions::Arrays.reverse                        >>
-      Functions::Util.map{ |date| date.strftime("%B of %Y") }
+      Functions::Util.map{ |date| { display: date.strftime("%B %Y"),
+                                    code:    date.strftime("%Y-%m") } }
     }
 
     class << self

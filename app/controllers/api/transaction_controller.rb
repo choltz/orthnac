@@ -1,7 +1,7 @@
 module Api
   class TransactionController < ApplicationController
     def categories
-      render json: { items: Transaction.categories.map{ |category, _| category } }
+      render json: { items: Transaction.categories.map{ |code, display| { code: code, display: display } } }
     end
 
     def months

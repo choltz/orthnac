@@ -38,10 +38,12 @@ Vue.component('graph', {
       chart.draw(this.graphData, options);
     },
     // Retrieve graph data from the server
-    getGraphData: function(category) {
-      if (category != undefined) {
-        queryString = '?category=' + category;
-
+    getGraphData: function(condition, filterId) {
+      if (filterId == 'category') {
+        queryString = '?category=' + condition;
+      }
+      else if (filterId == 'date') {
+        queryString = '?date=' + condition;
       }
       else {
         queryString = '';
@@ -50,7 +52,7 @@ Vue.component('graph', {
       $.getJSON('api/dashboard/graph' + queryString, this.beginRender );
     },
     updateFilter: function(data) {
-      this.getGraphData(data.item);
+      this.getGraphData(data.item, data.id);
     }
   },
   beforeDestroy: function() {

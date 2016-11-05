@@ -10,7 +10,7 @@ Vue.component('data-dropdown', {
           + '    <div class  = "data-dropdown-item"'
           + '         v-for  ="item in items"'
           + '         @click = "selectItem(item)">'
-          + '      {{item}}'
+          + '      {{item.display}}'
           + '    </div>'
           + '  </div>'
           + '</div>',
@@ -37,20 +37,20 @@ Vue.component('data-dropdown', {
       $.getJSON(this.url, this.loadData );
     },
     loadData: function(data) {
-      this.items = this.includeAll == 'true' ? [this.defaultText] : [];
+      this.items = this.includeAll == 'true' ? [{display: 'all', code: this.defaultText}] : [];
 
       // Push results to array and flatten it
       this.items.push(data.items);
       this.items = $.map(this.items, function(n) { return n;} );
     },
     selectItem: function(item) {
-      this.text = item;
+      this.text = item.display;
 
       if (item == this.defaultText) {
         item = 'all';
       }
 
-      this.$root.$emit('data-dropdown:select-item', {id: this.id, item: item});
+      this.$root.$emit('data-dropdown:select-item', {id: this.id, item: item.code});
     }
   },
   mounted: function () {
