@@ -25,6 +25,7 @@ module Functions
         Function.new do
           data = (Functions::DateTools.date_to_billing_period >>
                   empty_cumulative_set                        >>
+                  current_date_line                           >>
                   add_projected_spending).call(date)
 
           (get_daily_totals(category) >> get_cumulative_totals).call(data)
@@ -35,7 +36,7 @@ module Functions
       def empty_cumulative_set
         Function.new do |range|
           range.reduce({}) do |hash, date|
-            hash.merge(::DateTools.date_string(date) => [0, 0, MAX_SPENDING, 0])
+            hash.merge(::DateTools.date_string(date) => [0, 0, MAX_SPENDING, 0, nil])
           end
         end
       end
@@ -50,6 +51,14 @@ module Functions
             values.push amount * (index + 1)
             hash.merge date => values
           end
+        end
+      end
+
+      def current_date_line
+        Function.new do |data|
+          line = data[Date.today.strftime("%Y/%m/%d")]
+          line[line.length - 1] = 'today'
+          data
         end
       end
 
@@ -76,6 +85,7 @@ module Functions
                                                    item[2].to_i + (array.length == 0 ? 0 : array.last[1]),
                                                    item[2],
                                                    item[3],
+                                                   item[6],
                                                    item[5]] }
         end
       end

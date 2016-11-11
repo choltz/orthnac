@@ -23,19 +23,29 @@ Vue.component('graph', {
     },
     // Set graph render details
     drawChart: function() {
-      this.graphData.unshift(['day', 'spent', 'total', 'max', 'projected']);
-      this.graphData = google.visualization.arrayToDataTable(this.graphData);
+      var data = new google.visualization.DataTable();
+
+      data.addColumn('string', 'day');
+      data.addColumn('number', 'spent');
+      data.addColumn('number', 'total');
+      data.addColumn('number', 'max');
+      data.addColumn('number', 'projected');
+      data.addColumn({type: 'string', role: 'annotation'});
+      data.addRows(this.graphData);
 
       var options = {
         hAxis: {title: 'day',  titleTextStyle: {color: '#333'}},
         vAxis: {minValue: 0},
         height: 400,
+        annotations: {
+          style: 'line'
+        },
         series: {2:{color:'#cccccc',lineWidth:2},
                  3:{color:'#aaaaaa',lineWidth:2}}
       };
 
       var chart = new google.visualization.AreaChart(document.getElementById(this.id));
-      chart.draw(this.graphData, options);
+      chart.draw(data, options);
     },
     // Retrieve graph data from the server
     getGraphData: function(condition, filterId) {
