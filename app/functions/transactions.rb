@@ -57,7 +57,7 @@ module Functions
       def current_date_line
         Function.new do |data|
           line = data[Date.today.strftime("%Y/%m/%d")]
-          line[line.length - 1] = 'today'
+          line[line.length - 1] = ''
           data
         end
       end
