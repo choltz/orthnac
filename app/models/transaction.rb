@@ -6,7 +6,7 @@ class Transaction < ActiveRecord::Base
   validates :amount,           presence:   true
   validates :import_id,        presence:   true
   validates :reference,        presence:   true
-  validates :reference,        uniqueness: true
+  validates :reference,        uniqueness: { scope: :posted_at }
   validates :transaction_at,   presence:   true
   validates :transaction_type, presence:   true
 

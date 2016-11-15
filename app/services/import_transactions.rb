@@ -18,7 +18,11 @@ module Services
 
         next if row['Originating Account Number'].blank?
 
-        if !Transaction.exists?(reference: row['Reference Number'])
+        date = row['Posting Date'].split('/')
+        year = date.pop
+        date = ([year] + date).flatten.join('-')
+
+        if Transaction.where("reference = ? and date(posted_at) = ?", row['Reference Number'], date).blank?
           Transaction.create! data(row, import)
         end
       end
