@@ -8,10 +8,11 @@ class TransactionTest < ActiveSupport::TestCase
   should validate_presence_of :transaction_type
   should validate_presence_of :amount
   should validate_presence_of :import_id
-  should validate_uniqueness_of :reference
+  should validate_uniqueness_of(:reference).scoped_to(:posted_at)
   should belong_to            :import
 
   setup do
+    Timecop.freeze(Date.parse('2016-09-15'))
     date = Date.today.beginning_of_month
 
     create_transaction 'Purchase',       10.00,   date + 1, '1a', 'Automotive',       'amazon'

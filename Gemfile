@@ -31,5 +31,6 @@ group :development do
 end
 
 group :test do
+  gem 'timecop'
   gem 'cucumber-timecop', require: false
 end
